@@ -27,7 +27,6 @@ public class CoursesController {
         return false;
     }
 
-
     public boolean deleteCourse(String courseId) {
         boolean removed = coursesDB.getAllCourses().removeIf(c -> c.getCourseId().equals(courseId));
         if (removed) {
@@ -44,6 +43,14 @@ public class CoursesController {
             }
         }
         return instructorCourses;
+    }
+
+    Course getCourseById(String courseId){
+        return coursesDB.getCourseById(courseId);
+    }
+
+    List<Course> getAllCourses(){
+        return coursesDB.getAllCourses();
     }
 
 //    public boolean courseExists(String courseId) {
@@ -81,10 +88,15 @@ public class CoursesController {
         //no need to save we're just viewing what's inside
     }
 
+    Student getStudentById(String studentId){
+        return (Student) usersDB.findById(studentId);
+    }
+
     void addLesson(String courseId, Lesson lesson)
     void updateLesson(String courseId, Lesson updatedLesson)
     void deleteLesson(String courseId, String lessonId)
-    List<Lesson> getLessons(String courseId)
+    List<Lesson> getLessons(String courseId);
+
 
 
 }
