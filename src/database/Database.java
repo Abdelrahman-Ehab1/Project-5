@@ -72,7 +72,7 @@ public class Database {
                 .orElse(null);
     }
 
-    // <-- ADD THIS METHOD
+
     public User findById(String userId) {
         return users.stream()
                 .filter(u -> u.getUserId().equals(userId))

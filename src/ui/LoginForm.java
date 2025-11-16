@@ -18,7 +18,7 @@ public class LoginForm extends JFrame {
     public LoginForm() {
 
         setTitle("Login Form");
-        setContentPane(LoginPanel);  // root panel from .form
+        setContentPane(LoginPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();                     // GUI Designer sets correct size
         setLocationRelativeTo(null);
@@ -42,6 +42,6 @@ public class LoginForm extends JFrame {
         JOptionPane.showMessageDialog(this, "Login successful! Welcome " + user.getUsername());
 
         dispose();
-        new Dashboard(user.getUsername(), user.getRole());
+
     }
 }

@@ -3,7 +3,7 @@ package models;
 import java.util.Random;
 
 public class User {
-    private String userId;        // 5-digit unique ID
+    private String userId;
     private String username;
     private String email;
     private String passwordHash;
@@ -30,21 +30,21 @@ public class User {
         this.role = role.trim().toUpperCase();
     }
 
-    // --- Generate random 5-digit user ID ---
+    //Generate random 5 digit user ID
     private String generateUserId() {
         Random rand = new Random();
-        int id = 10000 + rand.nextInt(90000); // 10000 - 99999
+        int id = 10000 + rand.nextInt(90000);
         return String.valueOf(id);
     }
 
-    // --- Getters ---
+
     public String getUserId() { return userId; }
     public String getUsername() { return username; }
     public String getEmail() { return email; }
     public String getPasswordHash() { return passwordHash; }
     public String getRole() { return role; }
 
-    // --- Validation methods ---
+
     public static boolean isValidUsername(String username) {
         return username != null && username.trim().length() >= 3;
     }

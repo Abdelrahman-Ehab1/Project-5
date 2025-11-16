@@ -24,8 +24,7 @@ public class SignupForm extends JFrame {
 
         auth = new AuthService(new Database());
 
-        fillRole.addItem("STUDENT");
-        fillRole.addItem("INSTRUCTOR");
+
 
         signupBn.addActionListener(e -> handleSignup());
     }
@@ -45,8 +44,10 @@ public class SignupForm extends JFrame {
             }
 
             JOptionPane.showMessageDialog(this, "Signup successful! Please login.");
+            LoginForm loginForm = new LoginForm();
+            loginForm.setVisible(true);
             dispose();  // Close signup form
-            new LoginForm();  // Open login form
+
 
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
