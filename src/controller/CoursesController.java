@@ -4,6 +4,7 @@ import database.CoursesDatabase;
 import database.Database;
 import models.Course;
 import models.Student;
+import models.Lesson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,12 +106,38 @@ public class CoursesController {
         return (Student) usersDB.findById(studentId);
     }
 
-    void addLesson(String courseId, Lesson lesson)
-    void updateLesson(String courseId, Lesson updatedLesson)
-    void deleteLesson(String courseId, String lessonId)
-    List<Lesson> getLessons(String courseId);
+    public void addLesson(String courseId, Lesson lesson) {
+        Course course = coursesDB.getCourseById(courseId);
+        if (course == null) return;
+        course.getLessons().add(lesson);
+        coursesDB.saveCourses();
+    }
 
+    public void updateLesson(String courseId, Lesson updatedLesson) {
+        Course course = coursesDB.getCourseById(courseId);
+        if (course == null) return;
 
+        List<Lesson> lessons = course.getLessons();
+        for (int i = 0; i < lessons.size(); i++) {
+            if (lessons.get(i).getLessonId().equals(updatedLesson.getLessonId())) {
+                lessons.set(i, updatedLesson);
+                coursesDB.saveCourses();
+                return;
+            }
+        }
+    }
+
+    public void deleteLesson(String courseId, String lessonId) {
+        Course course = coursesDB.getCourseById(courseId);
+        if (course == null) return;
+        course.getLessons().removeIf(l -> l.getLessonId().equals(lessonId));
+        coursesDB.saveCourses();
+    }
+
+    public List<Lesson> getLessons(String courseId) {
+        Course course = coursesDB.getCourseById(courseId);
+        return course != null ? course.getLessons() : null;
+    }
 
 }
 
