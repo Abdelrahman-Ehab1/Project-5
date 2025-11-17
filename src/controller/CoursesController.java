@@ -16,6 +16,19 @@ public class CoursesController {
         this.usersDB = usersDB;
     }
 
+    public void createCourse(String title, String description, String instructorId){
+        int num = coursesDB.getAllCourses().size();
+        String courseId = "C"+"0"+num;
+        while (coursesDB.getCourseById(courseId) == null){
+            num++;
+            courseId = "C"+"0"+num;
+        }
+        Course addedCourse = new Course(courseId,description,instructorId,title);
+        coursesDB.addCourse(addedCourse);
+        coursesDB.saveCourses();
+
+    }
+
     public boolean updateCourse(Course updatedCourse) {
         for (int i = 0; i <coursesDB.getAllCourses().size(); i++) {
             if (coursesDB.getAllCourses().get(i).getCourseId().equals(updatedCourse.getCourseId())) {
