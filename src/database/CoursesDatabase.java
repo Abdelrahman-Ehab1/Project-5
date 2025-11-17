@@ -50,14 +50,13 @@ public class CoursesDatabase {
         }
     }
 
-    public boolean addCourse(Course course) {
+    public void addCourse(Course course) {
         if (courses.stream().anyMatch(c -> c.getCourseId().equals(course.getCourseId()))) {
-            return false; // already exists
+            throw new UnsupportedOperationException("Course already exists");// already exists
         }
 
         courses.add(course);
         saveCourses();
-        return true;
     }
 
     public List<Course> getAllCourses() {
