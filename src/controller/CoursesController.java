@@ -1,116 +1,118 @@
 package controller;
 
 import database.CoursesDatabase;
-import database.Database;
 import models.Course;
-import models.Student;
+import models.Lesson;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CoursesController {
+
     private CoursesDatabase coursesDB;
-    private Database usersDB;
-    public CoursesController(CoursesDatabase coursesDB , Database usersDB) {
+
+    public CoursesController(CoursesDatabase coursesDB) {
         this.coursesDB = coursesDB;
-        this.usersDB = usersDB;
     }
 
-    public void createCourse(String title, String description, String instructorId){
+    // -------------------------
+    //  Course CRUD
+    // -------------------------
+    public void createCourse(String title, String description, String instructorId) {
         int num = coursesDB.getAllCourses().size();
-        String courseId = "C"+"0"+num;
-        while (coursesDB.getCourseById(courseId) == null){
-            num++;
-            courseId = "C"+"0"+num;
-        }
-        Course addedCourse = new Course(courseId,description,instructorId,title);
-        coursesDB.addCourse(addedCourse);
-        coursesDB.saveCourses();
+        String courseId = "C" + num;
 
+        // Fix: While ID exists, increment
+        while (coursesDB.getCourseById(courseId) != null) {
+            num++;
+            courseId = "C" + num;
+        }
+
+        Course newCourse = new Course(courseId, title, description, instructorId);
+        coursesDB.addCourse(newCourse);
+        coursesDB.saveCourses();
     }
 
-    public boolean updateCourse(Course updatedCourse) {
-        for (int i = 0; i <coursesDB.getAllCourses().size(); i++) {
-            if (coursesDB.getAllCourses().get(i).getCourseId().equals(updatedCourse.getCourseId())) {
-                coursesDB.getAllCourses().set(i, updatedCourse);
-                coursesDB.saveCourses();
-                return true;
-            }
-        }
-        return false;
+    public boolean updateCourse(Course updated) {
+        Course existing = coursesDB.getCourseById(updated.getCourseId());
+        if (existing == null) return false;
+
+        coursesDB.replaceCourse(updated);
+        coursesDB.saveCourses();
+        return true;
     }
 
     public boolean deleteCourse(String courseId) {
-        boolean removed = coursesDB.getAllCourses().removeIf(c -> c.getCourseId().equals(courseId));
-        if (removed) {
+        Course existing = coursesDB.getCourseById(courseId);
+        if (existing == null) return false;
+
+        coursesDB.deleteCourse(courseId);
+        coursesDB.saveCourses();
+        return true;
+    }
+
+
+    // -------------------------
+    // Enrollment (PDF version)
+    // -------------------------
+    public void addStudentToCourse(String studentId, String courseId) {
+        Course course = coursesDB.getCourseById(courseId);
+        if (course == null) return;
+
+        if (!course.getStudentIds().contains(studentId)) {
+            course.getStudentIds().add(studentId);
             coursesDB.saveCourses();
         }
-        return removed;
     }
 
-    public List<Course> getCoursesByInstructor(String instructorId) {      // Get courses by instructor
-        List<Course> instructorCourses = new ArrayList<>();
-        for (Course course : coursesDB.getAllCourses()) {
-            if (course.getInstructorId().equals(instructorId)) {
-                instructorCourses.add(course);
+    public void removeStudentFromCourse(String studentId, String courseId) {
+        Course course = coursesDB.getCourseById(courseId);
+        if (course == null) return;
+
+        course.getStudentIds().remove(studentId);
+        coursesDB.saveCourses();
+    }
+
+    public List<String> getEnrolledStudentIds(String courseId) {
+        Course course = coursesDB.getCourseById(courseId);
+        return (course != null) ? course.getStudentIds() : null;
+    }
+
+
+    // -------------------------
+    // LESSON MANAGEMENT
+    // -------------------------
+    public void addLesson(String courseId, Lesson lesson) {
+        Course course = coursesDB.getCourseById(courseId);
+        if (course == null) return;
+
+        course.getLessons().add(lesson);
+        coursesDB.saveCourses();
+    }
+
+    public void updateLesson(String courseId, Lesson updatedLesson) {
+        Course course = coursesDB.getCourseById(courseId);
+        if (course == null) return;
+
+        List<Lesson> lessons = course.getLessons();
+        for (int i = 0; i < lessons.size(); i++) {
+            if (lessons.get(i).getLessonId().equals(updatedLesson.getLessonId())) {
+                lessons.set(i, updatedLesson);
+                coursesDB.saveCourses();
+                return;
             }
         }
-        return instructorCourses;
     }
 
-    Course getCourseById(String courseId){
-        return coursesDB.getCourseById(courseId);
-    }
+    public void deleteLesson(String courseId, String lessonId) {
+        Course course = coursesDB.getCourseById(courseId);
+        if (course == null) return;
 
-    List<Course> getAllCourses(){
-        return coursesDB.getAllCourses();
-    }
-
-//    public boolean courseExists(String courseId) {
-//        return coursesDB.getCourseById(courseId) != null;
-//    }
-
-
-    void addStudentToCourse(String studentId ,String courseId){
-        Course wantedCourse = coursesDB.getCourseById(courseId);
-        if(wantedCourse.getStudentIds().contains(studentId))
-            throw new IllegalArgumentException("student already enrolled in that course");
-
-        wantedCourse.getStudentIds().add(studentId);
-        Student student = (Student) usersDB.findById(studentId);
-        student.getEnrolledCourses().add(wantedCourse);
-
+        course.getLessons().removeIf(l -> l.getLessonId().equals(lessonId));
         coursesDB.saveCourses();
-        usersDB.saveUsers();
     }
 
-    void removeStudentFromCourse(String studentId ,String courseId){
-        Course wantedCourse = coursesDB.getCourseById(courseId);
-        wantedCourse.getStudentIds().remove(studentId);           //that student removed from that course
-
-        Student student = (Student) usersDB.findById(studentId);
-        student.getEnrolledCourses().remove(wantedCourse);
-
-        coursesDB.saveCourses();
-        usersDB.saveUsers();
+    public List<Lesson> getLessons(String courseId) {
+        Course course = coursesDB.getCourseById(courseId);
+        return (course != null) ? course.getLessons() : null;
     }
-
-    List<String> getEnrolledStudentIds(String courseId){
-        Course wantedCourse = coursesDB.getCourseById(courseId);
-        return wantedCourse.getStudentIds();
-        //no need to save we're just viewing what's inside
-    }
-
-    Student getStudentById(String studentId){
-        return (Student) usersDB.findById(studentId);
-    }
-
-    void addLesson(String courseId, Lesson lesson)
-    void updateLesson(String courseId, Lesson updatedLesson)
-    void deleteLesson(String courseId, String lessonId)
-    List<Lesson> getLessons(String courseId);
-
-
-
 }
-
