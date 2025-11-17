@@ -29,8 +29,4 @@ public class Student extends User {
     }
 
 
-   void BrowseAvailableCourses(){
-
-   }
-
 }
