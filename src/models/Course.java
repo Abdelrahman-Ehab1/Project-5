@@ -15,8 +15,7 @@ public class Course {
     private List<String> studentIds;
 
     public Course(
-            String courseId, String description, String instructorId, List<Lesson> lessons
-            ,List<String> studentIds, String title) {
+            String courseId, String description, String instructorId, String title) {
 
         setCourseId(courseId);
         setDescription(description);
