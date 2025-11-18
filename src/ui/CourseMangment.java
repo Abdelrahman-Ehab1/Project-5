@@ -1,10 +1,18 @@
 package ui;
 
+import controller.CoursesController;
+import database.CoursesDatabase;
+import database.Database;
+import models.Course;
+import models.UserSession;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 public class CourseMangment extends JFrame{
     private JPanel Course_Mangment_panel;
@@ -16,29 +24,83 @@ public class CourseMangment extends JFrame{
     private JButton Exit_but;
     private JComboBox EditDelete_Combobox;
     private JButton searchButton;
-    private JTextField NewCourse_ID_Field;
     private JTextField NewTitle_Field;
     private JTextField NewDescription_field;
     private JButton NewsaveButton;
     private JButton NewexitButton;
+    Course found=null;
+    int i,yu;
+    String tempT,tempD,tempE;
+    Course mm=new Course("1234","adad","59020","hhjj");
+    Course ml=new Course("1235","dada","59020","jjhh");
+    Database Db=new Database();
+    CoursesDatabase CD=new CoursesDatabase();
+    CoursesController Con=new CoursesController(CD,Db);
+    String x= UserSession.getLoggedInUserId();
+    List<Course> m=Con.getCoursesByInstructor(x);
 
     public CourseMangment() {
+        setContentPane(Course_Mangment_panel);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setContentPane(Course_Mangment_panel);
-        setLayout(null);
         setLocationRelativeTo(null);
         setSize(900,900);
 
+        String [] mk={"Course ID","Description","InstructorID","Title"};
+        DefaultTableModel formatt=new DefaultTableModel(mk,0);
+        for(i=0;i<m.size();i++)
+        {
+            formatt.addRow(new Object[]{m.get(i).getCourseId(),m.get(i).getDescription(),m.get(i).getInstructorId(),m.get(i).getTitle()});
+        }
+        Courses_Table.setModel(formatt);
         Save_but.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                tempT=Title_field.getText();
+tempD=Description_Field.getText();
+tempE=EditDelete_Combobox.getSelectedItem().toString();
+if(tempD.isEmpty()||tempT.isEmpty()||(EditDelete_Combobox.getSelectedIndex()==-1))
+{
+    JOptionPane.showMessageDialog(Course_Mangment_panel,"Please make Sure you haven't left anything blank");
+    return;
+}
+if(tempE.equalsIgnoreCase("Edit"))
+{
+    m.get(yu).setTitle(tempT);
+    m.get(yu).setDescription(tempD);
+    Con.updateCourse(m.get(yu));
+}
+else if(tempE.equalsIgnoreCase("Delete"))
+                {
+                    Con.deleteCourse(m.get(yu).getCourseId());
+                   m.remove(yu);
 
+                }
             }
+
         });
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                found=null;
+                yu=0;
+                String f=Course_id_Searchh.getText();
+                for(i=0;i<m.size();i++)
+                {
+                    if(m.get(i).getCourseId().equalsIgnoreCase(f))
+                    {
+                        found=m.get(i);
+                        yu=i;
+                        break;
+                    }
+                }
+                if(found==null)
+                    JOptionPane.showMessageDialog(Course_Mangment_panel,"Please Make Sure you have Entered a valid Course ID");
+                    else
+                    {
+                        Title_field.setText(found.getTitle());
+                    Description_Field.setText(found.getDescription());
+                    }
 
             }
         });
@@ -52,7 +114,15 @@ public class CourseMangment extends JFrame{
         NewsaveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(!(NewTitle_Field.getText().isEmpty()) && !(NewDescription_field.getText().isEmpty()))
+                {
 
+                    Con.createCourse(NewTitle_Field.getText(),NewDescription_field.getText(),x);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(Course_Mangment_panel,"Please Make sure you didnt leave the Fields Blank");
+                }
             }
         });
         NewexitButton.addActionListener(new ActionListener() {

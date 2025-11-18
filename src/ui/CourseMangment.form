@@ -122,49 +122,17 @@
           <text value="Create New Course"/>
         </properties>
       </component>
-      <component id="48b41" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="8" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Course ID"/>
-        </properties>
-      </component>
-      <component id="3ebd1" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="8" column="13" row-span="1" col-span="33" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Title"/>
-        </properties>
-      </component>
       <component id="3df5e" class="javax.swing.JLabel">
         <constraints>
-          <grid row="8" column="50" row-span="1" col-span="7" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="26" row-span="1" col-span="31" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Description"/>
         </properties>
       </component>
-      <component id="a6da" class="javax.swing.JTextField" binding="NewCourse_ID_Field">
-        <constraints>
-          <grid row="8" column="5" row-span="1" col-span="8" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
       <component id="eda29" class="javax.swing.JTextField" binding="NewDescription_field">
         <constraints>
           <grid row="8" column="57" row-span="1" col-span="5" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="915f7" class="javax.swing.JTextField" binding="NewTitle_Field">
-        <constraints>
-          <grid row="8" column="46" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
@@ -193,6 +161,22 @@
         <properties>
           <text value="Exit"/>
         </properties>
+      </component>
+      <component id="3ebd1" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="8" column="0" row-span="1" col-span="12" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Title"/>
+        </properties>
+      </component>
+      <component id="915f7" class="javax.swing.JTextField" binding="NewTitle_Field">
+        <constraints>
+          <grid row="8" column="12" row-span="1" col-span="14" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
       </component>
     </children>
   </grid>

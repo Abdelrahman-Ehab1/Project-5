@@ -13,6 +13,7 @@ public class CoursesDatabase {
     private List<Course> courses;
     private Gson gson;
 
+
     public CoursesDatabase() {
         this.gson = new Gson();
         loadCourses();
@@ -71,5 +72,16 @@ public class CoursesDatabase {
         }
         return null;             // we might throw an exception
     }
+ public void DeleteCourse(String Id)
+ {
+     Course course;
+     for (int i=0;i<courses.size();i++) {
+         if (courses.get(i).getCourseId().equals(Id)) {
+             courses.remove(i);
+             break;
+         }
+         }
+     saveCourses();
 
+ }
 }

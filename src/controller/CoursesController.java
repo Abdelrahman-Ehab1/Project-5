@@ -41,12 +41,13 @@ public class CoursesController {
         return false;
     }
 
-    public boolean deleteCourse(String courseId) {
-        boolean removed = coursesDB.getAllCourses().removeIf(c -> c.getCourseId().equals(courseId));
-        if (removed) {
-            coursesDB.saveCourses();
-        }
-        return removed;
+    public void deleteCourse(String courseId) {
+//        boolean removed = coursesDB.getAllCourses().removeIf(c -> c.getCourseId().equals(courseId));
+//        if (removed) {
+//            coursesDB.saveCourses();
+//        }
+//        return removed;
+        coursesDB.DeleteCourse(courseId);
     }
 
     public List<Course> getCoursesByInstructor(String instructorId) {      // Get courses by instructor
