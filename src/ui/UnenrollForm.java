@@ -14,14 +14,14 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class UnenrollForm extends JFrame{
-    private JPanel UnenrollForm;
+    private JPanel unenrollForm;
     private JTable table1;
     private JButton unenrollbutton;
     private JScrollPane scroller;
 
     String currentUserId = UserSession.getLoggedInUserId();
     public UnenrollForm() {
-        setContentPane(UnenrollForm);
+        setContentPane(unenrollForm);
         setTitle("Unenroll Student");
         setSize(900, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -54,10 +54,10 @@ public class UnenrollForm extends JFrame{
                     JOptionPane.showMessageDialog(UnenrollForm.this, "Table is already empty, Can't view anything");
                 }
 
-                /*else if(table1.getSelectedRowCount()==0){  // btrag3 -1 lw mfesh row selected msh 0
+                else if(table1.getSelectedRowCount()==0){  // btrag3 -1 lw mfesh row selected msh 0
                     JOptionPane.showMessageDialog(UnenrollForm.this,"Select course first");
                 }
-                 */
+
 
             }
         });
