@@ -12,12 +12,11 @@ public class LoginForm extends JFrame {
     private JTextField fillEmail;
     private JPasswordField fillPassword;
     private JButton loginBn;
-    private JButton goToSignupBtn;  // If you want a Signup redirect button
+    // private JButton goToSignupBtn;  // Optional signup redirect button
 
     private AuthService auth;
 
     public LoginForm() {
-
         setTitle("Login Form");
         setContentPane(LoginPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,12 +27,12 @@ public class LoginForm extends JFrame {
 
         loginBn.addActionListener(e -> login());
 
-        if (goToSignupBtn != null) {
-            goToSignupBtn.addActionListener(e -> {
-                dispose();
-                new SignupForm();
-            });
-        }
+//        if (goToSignupBtn != null) {
+//            goToSignupBtn.addActionListener(e -> {
+//                dispose();
+//                new SignupForm();
+//            });
+//        }
 
         setVisible(true);
     }
@@ -42,7 +41,6 @@ public class LoginForm extends JFrame {
         String email = fillEmail.getText().trim();
         String password = new String(fillPassword.getPassword()).trim();
 
-        // Basic validation
         if (email.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill all fields.");
             return;
@@ -55,7 +53,7 @@ public class LoginForm extends JFrame {
             return;
         }
 
-        // Save the logged-in user's ID
+        // Save logged-in user ID
         UserSession.setLoggedInUserId(user.getUserId());
 
         JOptionPane.showMessageDialog(this, "Login successful! Welcome " + user.getUsername());
@@ -65,8 +63,20 @@ if(user.getRole().equalsIgnoreCase("INSTRUCTOR"))
    new Instructor_Dashboard();
 }
 
+<<<<<<< HEAD
        // dispose();
+=======
+        dispose(); // Close login form
+>>>>>>> main
 
-        
+        // Redirect based on role
+        String role = user.getRole();
+        if (role.equalsIgnoreCase("STUDENT")) {
+            new StudentForm(); // Your student frame
+        } else if (role.equalsIgnoreCase("INSTRUCTOR")) {
+            new Instructor_Dashboard(); // Your instructor frame
+        } else {
+            JOptionPane.showMessageDialog(null, "Unknown role! Cannot redirect.");
+        }
     }
 }

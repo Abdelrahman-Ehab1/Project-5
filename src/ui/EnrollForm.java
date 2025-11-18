@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
 public class EnrollForm extends JFrame {
-    private JPanel EnrollForm;
+    private JPanel enrollForm;
     private JTable table1;
     private JButton enrollbutton;
     private JScrollPane scroller;
@@ -18,7 +18,7 @@ public class EnrollForm extends JFrame {
     String currentUserId = UserSession.getLoggedInUserId();
 
     public EnrollForm() {
-        setContentPane(EnrollForm);
+        setContentPane(enrollForm);
         setTitle("Unenroll Student");
         setSize(900, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

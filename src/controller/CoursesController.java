@@ -11,10 +11,10 @@ import java.util.List;
 
 public class CoursesController {
     private CoursesDatabase coursesDB;
-    private Database usersDB;
+    private Database usersDB;             //we can remove it
     public CoursesController(CoursesDatabase coursesDB , Database usersDB) {
         this.coursesDB = coursesDB;
-        this.usersDB = usersDB;
+        this.usersDB = usersDB;      //we can remove it
     }
 
     public void createCourse(String title, String description, String instructorId){
@@ -79,22 +79,21 @@ public class CoursesController {
             throw new IllegalArgumentException("student already enrolled in that course");
 
         wantedCourse.getStudentIds().add(studentId);
-        Student student = (Student) usersDB.findById(studentId);
-        student.getEnrolledCourses().add(wantedCourse);
-
         coursesDB.saveCourses();
-        usersDB.saveUsers();
+
+       /* Student student = (Student) usersDB.findById(studentId);
+        student.getEnrolledCourses().add(wantedCourse);
+        usersDB.saveUsers();*/   //if we will save in the user File also
     }
 
     void removeStudentFromCourse(String studentId ,String courseId){
         Course wantedCourse = coursesDB.getCourseById(courseId);
         wantedCourse.getStudentIds().remove(studentId);           //that student removed from that course
-
-        Student student = (Student) usersDB.findById(studentId);
-        student.getEnrolledCourses().remove(wantedCourse);
-
         coursesDB.saveCourses();
-        usersDB.saveUsers();
+
+       /* Student student = (Student) usersDB.findById(studentId);
+        student.getEnrolledCourses().remove(wantedCourse);
+        usersDB.saveUsers(); */
     }
 
     List<String> getEnrolledStudentIds(String courseId){
@@ -110,6 +109,7 @@ public class CoursesController {
     public void addLesson(String courseId, Lesson lesson) {
         Course course = coursesDB.getCourseById(courseId);
         if (course == null) return;
+// we're supposed to click on the course then click add,so this case won't happen
         course.getLessons().add(lesson);
         coursesDB.saveCourses();
     }
@@ -118,10 +118,10 @@ public class CoursesController {
         Course course = coursesDB.getCourseById(courseId);
         if (course == null) return;
 
-        List<Lesson> lessons = course.getLessons();
+        List<Lesson> lessons = course.getLessons();  // because course has a list of lesson objects not string ids
         for (int i = 0; i < lessons.size(); i++) {
             if (lessons.get(i).getLessonId().equals(updatedLesson.getLessonId())) {
-                lessons.set(i, updatedLesson);
+                lessons.set(i, updatedLesson);             //exchange the old lesson by the new updated one
                 coursesDB.saveCourses();
                 return;
             }
