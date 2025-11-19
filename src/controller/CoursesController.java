@@ -5,6 +5,7 @@ import database.Database;
 import models.Course;
 import models.Student;
 import models.Lesson;
+import models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,18 +18,20 @@ public class CoursesController {
         this.usersDB = usersDB;      //we can remove it
     }
 
-    public void createCourse(String title, String description, String instructorId){
-        int num = coursesDB.getAllCourses().size();
-        String courseId = "C"+"0"+num;
-        while (coursesDB.getCourseById(courseId) == null){
-            num++;
-            courseId = "C"+"0"+num;
-        }
-        Course addedCourse = new Course(courseId,description,instructorId,title);
-        coursesDB.addCourse(addedCourse);
-        coursesDB.saveCourses();
+    public void createCourse(String title, String desc, String instructorId) {
+        String id;
+        int num = 1;
 
+        do {
+            id = "C" + num;
+            num++;
+        } while (coursesDB.getCourseById(id) != null);
+
+        Course c = new Course(id, title, desc, instructorId);
+        coursesDB.addCourse(c);
+        coursesDB.saveCourses();
     }
+
 
     public boolean updateCourse(Course updatedCourse) {
         for (int i = 0; i <coursesDB.getAllCourses().size(); i++) {
@@ -103,8 +106,22 @@ public class CoursesController {
     }
 
     Student getStudentById(String studentId){
-        return (Student) usersDB.findById(studentId);
+        User user = usersDB.findById(studentId); // returns User object
+
+        if ("STUDENT".equalsIgnoreCase(user.getRole())) {
+            // convert User → Student
+            Student student = new Student(user.getUsername(), user.getEmail(), user.getPasswordHash());
+            // Copy userId if needed
+            // student.setUserId(user.getUserId()); // optional if you have setter
+            return student;
+        } else {
+            throw new IllegalArgumentException(
+                    "User with ID " + studentId + " is not a Student (role: " + user.getRole() + ")"
+            );
+        }
     }
+
+
 
     public void addLesson(String courseId, Lesson lesson) {
         Course course = coursesDB.getCourseById(courseId);

@@ -1,6 +1,7 @@
 package controller;
 
 import database.CoursesDatabase;
+import database.Database;
 import models.Course;
 import models.Student;
 
@@ -11,22 +12,38 @@ public class StudentController {
     private CoursesDatabase coursedb;
     private CoursesController courseCont;
 
-
-    public ArrayList<Course> getallCourses(){
-        ArrayList <Course> allCourses = (ArrayList<Course>) coursedb.getAllCourses();// load courses from nasser -> returns all the courses from the courses.json file
-        ArrayList<Course> availableCourses = new ArrayList<>();
-        for(int i = 0 ; i < allCourses.size() ; i++) {
-            boolean isEnrolled = false;
-            if (student.getEnrolledCourses().equals(allCourses.get(i))) {
-                isEnrolled = true;
-            }
-            if (!isEnrolled) {
-                availableCourses.add(allCourses.get(i));
-            }
-        }
-        return availableCourses;
+    public StudentController() {
+        this.coursedb = new CoursesDatabase();
+        Database usersDB = new Database();
+        this.courseCont = new CoursesController(coursedb, usersDB);
     }
 
+    public void setCurrentStudent(String studentId) {
+        this.student = courseCont.getStudentById(studentId);
+    }
+
+    public ArrayList<Course> getallCourses() {
+
+        ArrayList<Course> allCourses = (ArrayList<Course>) coursedb.getAllCourses();
+        ArrayList<Course> availableCourses = new ArrayList<>();
+
+        if (student == null) {
+            System.out.println("ERROR: student is null — call setCurrentStudent() first.");
+            return availableCourses;
+        }
+
+        for (int i = 0; i < allCourses.size(); i++) {
+            Course course = allCourses.get(i);
+
+            boolean isEnrolled = student.getEnrolledCourses().contains(course); // btcheck lw el student kan 3ndo el course da
+
+            if (!isEnrolled) {
+                availableCourses.add(course);
+            }
+        }
+
+        return availableCourses;
+    }
 
     public void unenrollfromCourse(String studentId, String courseId){
         courseCont.removeStudentFromCourse(studentId, courseId);

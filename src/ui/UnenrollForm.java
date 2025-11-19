@@ -20,12 +20,16 @@ public class UnenrollForm extends JFrame{
     private JScrollPane scroller;
 
     String currentUserId = UserSession.getLoggedInUserId();
+
+    private StudentController controller = new StudentController();
+
     public UnenrollForm() {
         setContentPane(unenrollForm);
         setTitle("Unenroll Student");
         setSize(900, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        controller.setCurrentStudent(currentUserId);
 
         String[] columns = {"CourseId", "Title", "Description", "InstructorId"};
         DefaultTableModel model = new DefaultTableModel(columns, 0);
@@ -39,13 +43,14 @@ public class UnenrollForm extends JFrame{
                 if(table1.getSelectedRowCount()==1){
                     int choice = JOptionPane.showConfirmDialog(UnenrollForm.this,"Final decision: you want to unenroll this course ?","Confirm course unenroll",JOptionPane.YES_NO_OPTION);
 
-                    if(choice == 1 || choice==-1 ){ // -1 y3ny afal das 3la x  // 1 y3ny das 3la NO
+                    if(choice == 1 || choice==-1 ){ // -1 y3ny afal: das 3la x  // 1 y3ny das 3la NO
                         return;
                     }
 
-                    StudentController student = new StudentController();
+                    //StudentController student = new StudentController();
                     String courseId = (String) model.getValueAt(table1.getSelectedRow(), 0);
-                    student.unenrollfromCourse(currentUserId , courseId); //studentid from boda
+                    //student.unenrollfromCourse(currentUserId , courseId); //studentid from boda
+                    controller.unenrollfromCourse(currentUserId, courseId);
                     model.removeRow(table1.getSelectedRow());
 
                 }
@@ -74,8 +79,8 @@ public class UnenrollForm extends JFrame{
     }
 
     private void loadStudentsToTable(DefaultTableModel model) {
-        StudentController controller = new StudentController();
-        Student student = controller.getStudentbyId(currentUserId); // take student id from boda
+        controller.setCurrentStudent(currentUserId);    // take student id from boda
+        Student student = controller.getStudentbyId(currentUserId);
 
         ArrayList<Course> courses = student.getEnrolledCourses();
 
