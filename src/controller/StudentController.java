@@ -22,7 +22,11 @@ public class StudentController {
         this.student = courseCont.getStudentById(studentId);
     }
 
+<<<<<<< Updated upstream
     public ArrayList<Course> getallCourses(){
+=======
+    public ArrayList<Course> getallCourses() {
+>>>>>>> Stashed changes
 
         ArrayList<Course> allCourses = (ArrayList<Course>) coursedb.getAllCourses();
         ArrayList<Course> availableCourses = new ArrayList<>();
