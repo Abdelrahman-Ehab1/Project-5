@@ -61,7 +61,7 @@ public class CoursesDatabase {
     }
 
     public List<Course> getAllCourses() {
-        return new ArrayList<>(courses);
+        return courses;
     }
 
     public Course getCourseById(String courseId) {

@@ -59,6 +59,7 @@ public class LoginForm extends JFrame {
         JOptionPane.showMessageDialog(this, "Login successful! Welcome " + user.getUsername());
 
         dispose(); // Close login form
+       // dispose();
 
         // Redirect based on role
         String role = user.getRole();

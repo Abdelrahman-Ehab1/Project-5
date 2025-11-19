@@ -6,12 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class StudentForm extends JFrame {
-
     private JPanel studentPanel;
-
     private JButton button3;
     private JButton button4;
-
     private JButton unenrollButton;
     private JButton enrollButton;
 
