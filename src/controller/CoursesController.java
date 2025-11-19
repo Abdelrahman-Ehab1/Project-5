@@ -5,6 +5,7 @@ import database.Database;
 import models.Course;
 import models.Student;
 import models.Lesson;
+import models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,8 +106,22 @@ public class CoursesController {
     }
 
     Student getStudentById(String studentId){
-        return (Student) usersDB.findById(studentId);
+        User user = usersDB.findById(studentId); // returns User object
+
+        if ("STUDENT".equalsIgnoreCase(user.getRole())) {
+            // convert User → Student
+            Student student = new Student(user.getUsername(), user.getEmail(), user.getPasswordHash());
+            // Copy userId if needed
+            // student.setUserId(user.getUserId()); // optional if you have setter
+            return student;
+        } else {
+            throw new IllegalArgumentException(
+                    "User with ID " + studentId + " is not a Student (role: " + user.getRole() + ")"
+            );
+        }
     }
+
+
 
     public void addLesson(String courseId, Lesson lesson) {
         Course course = coursesDB.getCourseById(courseId);

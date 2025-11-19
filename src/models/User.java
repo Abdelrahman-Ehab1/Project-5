@@ -10,18 +10,17 @@ public class User {
     private String role;
 
     public User(String username, String email, String passwordHash, String role) {
-        if (!isValidUsername(username)) {
+        if (!isValidUsername(username))
             throw new IllegalArgumentException("Username must be at least 3 characters");
-        }
-        if (!isValidEmail(email)) {
-            throw new IllegalArgumentException("Email must be in the format: name@gmail.com");
-        }
-        if (!isValidPassword(passwordHash)) {
+
+        if (!isValidEmail(email))
+            throw new IllegalArgumentException("Email must be in the format name@gmail.com");
+
+        if (!isValidPassword(passwordHash))
             throw new IllegalArgumentException("Password must be at least 6 characters");
-        }
-        if (!isValidRole(role)) {
+
+        if (!isValidRole(role))
             throw new IllegalArgumentException("Role must be STUDENT or INSTRUCTOR");
-        }
 
         this.userId = generateUserId();
         this.username = username;
@@ -30,13 +29,14 @@ public class User {
         this.role = role.trim().toUpperCase();
     }
 
-    //Generate random 5 digit user ID
     private String generateUserId() {
         Random rand = new Random();
-        int id = 10000 + rand.nextInt(90000);
-        return String.valueOf(id);
+        return String.valueOf(10000 + rand.nextInt(90000));
     }
 
+    public void regenerateUserId() {
+        this.userId = generateUserId();
+    }
 
     public String getUserId() { return userId; }
     public String getUsername() { return username; }
@@ -44,15 +44,12 @@ public class User {
     public String getPasswordHash() { return passwordHash; }
     public String getRole() { return role; }
 
-
     public static boolean isValidUsername(String username) {
         return username != null && username.trim().length() >= 3;
     }
 
     public static boolean isValidEmail(String email) {
-        if (email == null) return false;
-        String regex = "^[\\w.-]+@gmail\\.com$";
-        return email.matches(regex);
+        return email != null && email.matches("^[\\w.-]+@gmail\\.com$");
     }
 
     public static boolean isValidPassword(String password) {
