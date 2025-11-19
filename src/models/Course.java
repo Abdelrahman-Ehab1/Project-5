@@ -14,8 +14,7 @@ public class Course {
     private List<Lesson> lessons;      //Composition relationship
     private List<String> studentIds;
 
-    public Course(
-            String courseId, String description, String instructorId, String title) {
+    public Course(String courseId, String title, String description, String instructorId) {
 
         setCourseId(courseId);
         setDescription(description);

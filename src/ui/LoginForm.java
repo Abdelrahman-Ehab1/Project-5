@@ -63,11 +63,8 @@ if(user.getRole().equalsIgnoreCase("INSTRUCTOR"))
    new Instructor_Dashboard();
 }
 
-<<<<<<< Updated upstream
         dispose(); // Close login form
-=======
        // dispose();
->>>>>>> Stashed changes
 
         // Redirect based on role
         String role = user.getRole();
