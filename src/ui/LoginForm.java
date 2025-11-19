@@ -57,9 +57,15 @@ public class LoginForm extends JFrame {
         UserSession.setLoggedInUserId(user.getUserId());
 
         JOptionPane.showMessageDialog(this, "Login successful! Welcome " + user.getUsername());
+if(user.getRole().equalsIgnoreCase("INSTRUCTOR"))
+{
+    setVisible(false);
+   new Instructor_Dashboard();
+}
 
+
+       // dispose();
         dispose(); // Close login form
-
         // Redirect based on role
         String role = user.getRole();
         if (role.equalsIgnoreCase("STUDENT")) {
