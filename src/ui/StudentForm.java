@@ -9,10 +9,6 @@ public class StudentForm extends JFrame {
     private JButton button3;
     private JButton button4;
     private JPanel studentPanel;
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
     private JButton unenrollButton;
     private JButton enrollButton;
 

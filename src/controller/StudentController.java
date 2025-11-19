@@ -1,7 +1,6 @@
 package controller;
 
 import database.CoursesDatabase;
-import database.Database;
 import models.Course;
 import models.Student;
 
@@ -12,42 +11,22 @@ public class StudentController {
     private CoursesDatabase coursedb;
     private CoursesController courseCont;
 
-    public StudentController() {
-        this.coursedb = new CoursesDatabase();
-        Database usersDB = new Database();
-        this.courseCont = new CoursesController(coursedb, usersDB);
-    }
 
-    public void setCurrentStudent(String studentId) {
-        this.student = courseCont.getStudentById(studentId);
-    }
-
-<<<<<<< Updated upstream
     public ArrayList<Course> getallCourses(){
-=======
-    public ArrayList<Course> getallCourses() {
->>>>>>> Stashed changes
-
-        ArrayList<Course> allCourses = (ArrayList<Course>) coursedb.getAllCourses();
+        ArrayList <Course> allCourses = (ArrayList<Course>) coursedb.getAllCourses();// load courses from nasser -> returns all the courses from the courses.json file
         ArrayList<Course> availableCourses = new ArrayList<>();
-
-        if (student == null) {
-            System.out.println("ERROR: student is null — call setCurrentStudent() first.");
-            return availableCourses;
-        }
-
-        for (int i = 0; i < allCourses.size(); i++) {
-            Course course = allCourses.get(i);
-
-            boolean isEnrolled = student.getEnrolledCourses().contains(course); // btcheck lw el student kan 3ndo el course da
-
+        for(int i = 0 ; i < allCourses.size() ; i++) {
+            boolean isEnrolled = false;
+            if (student.getEnrolledCourses().equals(allCourses.get(i))) {
+                isEnrolled = true;
+            }
             if (!isEnrolled) {
-                availableCourses.add(course);
+                availableCourses.add(allCourses.get(i));
             }
         }
-
         return availableCourses;
     }
+
 
     public void unenrollfromCourse(String studentId, String courseId){
         courseCont.removeStudentFromCourse(studentId, courseId);
