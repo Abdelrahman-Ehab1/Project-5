@@ -43,7 +43,8 @@ setSize(900,900);
         Exit_but.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                setVisible(false);
+                new Mainwindow();
             }
         });
     }
