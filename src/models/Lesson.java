@@ -1,11 +1,16 @@
 package models;
 
+import controller.CoursesController;
+import database.CoursesDatabase;
+import database.Database;
+
+import java.util.List;
+
 public class Lesson {
 
     private String lessonId;
     private String title;
     private String content;
-
     public Lesson(String lessonId, String title, String content) {
         this.lessonId = lessonId;
         this.title = title;
