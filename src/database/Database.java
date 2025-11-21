@@ -1,8 +1,8 @@
 package database;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import models.User;
+import models.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -15,13 +15,14 @@ public class Database {
     private Gson gson;
 
     public Database() {
-        gson = new Gson();
+        gson = new GsonBuilder().setPrettyPrinting().create();
         loadUsers();
     }
 
     private void loadUsers() {
         try {
             File file = new File(USERS_FILE);
+
             if (!file.exists()) {
                 users = new ArrayList<>();
                 saveUsers();
@@ -29,13 +30,33 @@ public class Database {
             }
 
             FileReader reader = new FileReader(file);
-            users = gson.fromJson(reader, new TypeToken<List<User>>(){}.getType());
 
-            if (users == null) users = new ArrayList<>();
+            List<JsonObject> rawList = gson.fromJson(reader, new TypeToken<List<JsonObject>>(){}.getType());
+            users = new ArrayList<>();
+
+            if (rawList != null) {
+                for (JsonObject obj : rawList) {
+
+                    String role = (obj.has("role") && !obj.get("role").isJsonNull())
+                            ? obj.get("role").getAsString().trim().toUpperCase()
+                            : "STUDENT";
+
+                    switch (role) {
+                        case "INSTRUCTOR":
+                            users.add(gson.fromJson(obj, Instructor.class));
+                            break;
+
+                        case "STUDENT":
+                        default:
+                            users.add(gson.fromJson(obj, Student.class));
+                            break;
+                    }
+                }
+            }
 
             reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Error loading users: " + e.getMessage());
             users = new ArrayList<>();
         }
     }
@@ -49,16 +70,8 @@ public class Database {
     }
 
     public boolean addUser(User user) {
-        User finalUser = user;
-        if (users.stream().anyMatch(u -> u.getEmail().equalsIgnoreCase(finalUser.getEmail()))) {
+        if (users.stream().anyMatch(u -> u.getEmail().equalsIgnoreCase(user.getEmail())))
             return false;
-        }
-
-        // Ensure userId is unique
-        User finalUser1 = user;
-        while (users.stream().anyMatch(u -> u.getUserId().equals(finalUser1.getUserId()))) {
-            user = new User(user.getUsername(), user.getEmail(), user.getPasswordHash(), user.getRole());
-        }
 
         users.add(user);
         saveUsers();
@@ -66,21 +79,12 @@ public class Database {
     }
 
     public User findByEmail(String email) {
-        return users.stream()
-                .filter(u -> u.getEmail().equalsIgnoreCase(email))
-                .findFirst()
-                .orElse(null);
+        return users.stream().filter(u -> u.getEmail().equalsIgnoreCase(email)).findFirst().orElse(null);
     }
-
 
     public User findById(String userId) {
-        return users.stream()
-                .filter(u -> u.getUserId().equals(userId))
-                .findFirst()
-                .orElse(null);
+        return users.stream().filter(u -> u.getUserId().equals(userId)).findFirst().orElse(null);
     }
 
-    public List<User> getAllUsers() {
-        return new ArrayList<>(users);
-    }
+    public List<User> getAllUsers() { return new ArrayList<>(users); }
 }
