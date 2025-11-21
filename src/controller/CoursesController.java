@@ -20,7 +20,9 @@ public class CoursesController {
         this.usersDB = usersDB;
     }
 
-
+    /**
+     * Create a new course with an auto-generated ID
+     */
     public void createCourse(String title, String desc, String instructorId) {
         int num = 1;
         String id;
@@ -35,7 +37,9 @@ public class CoursesController {
         coursesDB.saveCourses();
     }
 
-
+    /**
+     * Update a course
+     */
     public boolean updateCourse(Course updatedCourse) {
         List<Course> all = coursesDB.getAllCourses();
 
@@ -50,22 +54,26 @@ public class CoursesController {
         return false;
     }
 
-
+    /**
+     * Delete a course
+     */
     public void deleteCourse(String courseId) {
         coursesDB.DeleteCourse(courseId);
         coursesDB.saveCourses();
     }
 
-
-    public List<Course> getCoursesByInstructor(String instructorId) {     //getting courses created by an instructor
-        List<Course> instructorCourses = new ArrayList<>();
+    /**
+     * Get all courses for an instructor
+     */
+    public List<Course> getCoursesByInstructor(String instructorId) {
+        List<Course> result = new ArrayList<>();
 
         for (Course c : coursesDB.getAllCourses()) {
             if (c.getInstructorId().equals(instructorId)) {
-                instructorCourses.add(c);
+                result.add(c);
             }
         }
-        return instructorCourses;
+        return result;
     }
 
     public Course getCourseById(String courseId) {
@@ -76,20 +84,25 @@ public class CoursesController {
         return coursesDB.getAllCourses();
     }
 
-
+    /**
+     * Get student from users DB
+     */
     public Student getStudentById(String studentId) {
 
         User user = usersDB.findById(studentId);
+
         if (user == null)
             return null;
 
         if (!(user instanceof Student))
             throw new IllegalArgumentException("User with ID " + studentId + " is not a Student!");
 
-        return (Student) user;   // casting to return a student obj
+        return (Student) user;
     }
 
-
+    /**
+     * Enroll a student in a course
+     */
     public void addStudentToCourse(String studentId, String courseId) {
 
         Course course = coursesDB.getCourseById(courseId);
@@ -99,18 +112,22 @@ public class CoursesController {
         if (course.getStudentIds().contains(studentId))
             throw new IllegalArgumentException("Student already enrolled!");
 
+        // Add student to course
         course.getStudentIds().add(studentId);
-        coursesDB.saveCourses();     // in this line we save in courses.json
+        coursesDB.saveCourses();
 
+        // Add course to student
         Student student = getStudentById(studentId);
         if (student == null)
             throw new IllegalArgumentException("Student not found!");
 
-        student.enrollInCourse(courseId);  // method in student class to add that course to enrolled courses list
+        student.enrollInCourse(courseId);
         usersDB.saveUsers();
     }
 
-
+    /**
+     * Unenroll a student from a course
+     */
     public void removeStudentFromCourse(String studentId, String courseId) {
 
         Course course = coursesDB.getCourseById(courseId);
@@ -124,7 +141,7 @@ public class CoursesController {
         if (student == null)
             throw new IllegalArgumentException("Student not found!");
 
-        student.getEnrolledCourseIds().remove(courseId);  // here we modified directly in the list instead of calling a method to do so
+        student.getEnrolledCourseIds().remove(courseId);
         usersDB.saveUsers();
     }
 
@@ -133,24 +150,68 @@ public class CoursesController {
         return c != null ? c.getStudentIds() : new ArrayList<>();
     }
 
+    /***
+     * Add a lesson with auto-ID
+     *//*
+    public void addLesson(String courseId, Lesson lesson) {
+        Course c = coursesDB.getCourseById(courseId);
+        if (c == null)
+            throw new IllegalArgumentException("Course not found!");
+
+        // Generate lesson ID if not provided
+        if (lesson.getLessonId() == null || lesson.getLessonId().isEmpty()) {
+            lesson.setLessonId(generateLessonId(c));
+        }
+
+        c.getLessons().add(lesson);
+        coursesDB.saveCourses();
+    }
+*/
+   /* /**
+     * Auto-generate lesson IDs inside a course
+     /*
+    private String generateLessonId(Course course) {
+        int n = 1;
+        String id;
+
+        while (true) {
+            id = "L" + n;
+            String finalId = id; // ← الحل هنا
+
+            boolean exists = course.getLessons()
+                    .stream()
+                    .anyMatch(l -> l.getLessonId().equals(finalId));
+
+            if (!exists)
+                return id;
+
+            n++;
+        }
+    }*/
+
+    /**
+     * Update a lesson
+     */
     public void updateLesson(String courseId, Lesson updatedLesson) {
         Course c = coursesDB.getCourseById(courseId);
         if (c == null)
             throw new IllegalArgumentException("Course not found!");
 
-        List<Lesson> lessons = c.getLessons();    // because course has a list of lesson objects not string ids
+        List<Lesson> lessons = c.getLessons();
 
         for (int i = 0; i < lessons.size(); i++) {
             if (lessons.get(i).getLessonId().equals(updatedLesson.getLessonId())) {
 
-                lessons.set(i, updatedLesson);   //exchange the old lesson by the new updated one
+                lessons.set(i, updatedLesson);
                 coursesDB.saveCourses();
                 return;
             }
         }
     }
 
-
+    /**
+     * Delete a lesson
+     */
     public void deleteLesson(String courseId, String lessonId) {
 
         Course c = coursesDB.getCourseById(courseId);
@@ -165,66 +226,57 @@ public class CoursesController {
         Course c = coursesDB.getCourseById(courseId);
         return c != null ? c.getLessons() : new ArrayList<>();
     }
-//    public void createLesson(String title, String Content,String Course_ID){
-//        int num = coursesDB.getCourseById(Course_ID).getLessons().size();
-//        String Lesson_Id = "L"+"0"+num;
-//        while (coursesDB.getCourseById(Lesson_Id) == null)
-//        {
-//            num++;
-//            Lesson_Id = "L"+"0"+num;
-//        }
-//        Lesson addedCourse = new Lesson(Lesson_Id,title,Content);
-//        coursesDB.getCourseById()
-//        coursesDB.saveCourses();
+
+//    public void createLesson(String title, String content, String courseId) {
+//        Course course = coursesDB.getCourseById(courseId);
+//        if (course == null) return;
 //
+//        int num = course.getLessons().size();
+//        String lessonId = "L" + "0" + num;
+//
+//        // ensure ID is unique
+//        boolean exists = true;
+//        while (exists) {
+//            exists = false;
+//            for (Lesson l : course.getLessons()) {
+//                if (l.getLessonId().equals(lessonId)) {
+//                    exists = true;
+//                    num++;
+//                    lessonId = "L" + "0" + num;
+//                    break;
+//                }
+//            }
+//        }
+//
+//        Lesson newLesson = new Lesson(lessonId, title, content);
+//        course.getLessons().add(newLesson);
+//        coursesDB.saveCourses();
 //    }
-public void createLesson(String title, String content, String courseId) {
-    Course course = coursesDB.getCourseById(courseId);
-    if (course == null) return;
-
-    int num = course.getLessons().size();
-    String lessonId = "L" + "0" + num;
-
-    // ensure ID is unique
-    boolean exists = true;
-    while (exists) {
-        exists = false;
-        for (Lesson l : course.getLessons()) {
-            if (l.getLessonId().equals(lessonId)) {
-                exists = true;
-                num++;
-                lessonId = "L" + "0" + num;
-                break;
-            }
-        }
-    }
-
-    Lesson newLesson = new Lesson(lessonId, title, content);
-    course.getLessons().add(newLesson);
-    coursesDB.saveCourses();
+   public void createLesson(String title, String content, String courseId) {
+       Course course = coursesDB.getCourseById(courseId);
+       if (course == null) return;
+       String lessonId = coursesDB.generateGlobalLessonId();
+       Lesson newLesson = new Lesson(lessonId, title, content);
+       course.getLessons().add(newLesson);
+       coursesDB.saveCourses();
 }
 
-
-    public void createLesson(String title, String content, String courseId) {
+    public void removeCourseAsInstructor(String courseId){
         Course course = coursesDB.getCourseById(courseId);
-        if (course == null) return;
-        int num = course.getLessons().size();
-        String lessonId = "L" + "0" + num;
-        boolean exists = true;
-        while (exists) {
-            exists = false;
-            for (Lesson l : course.getLessons()) {  // for loop to make sure ids of lessons are unique
-                if (l.getLessonId().equals(lessonId)) {
-                    exists = true;
-                    num++;
-                    lessonId = "L" + "0" + num;
-                    break;
-                }
-            }
+        if (course == null)
+            throw new IllegalArgumentException("Course not found!");
+
+        List<String> listStd= getEnrolledStudentIds(courseId);
+        for(int i = 0 ; i<getEnrolledStudentIds(courseId).size() ; i++){
+            removeStudentFromCourse(listStd.get(i),courseId);
         }
 
-        Lesson newLesson = new Lesson(lessonId, title, content);
-        course.getLessons().add(newLesson);
+        /*for(String studentId : getEnrolledStudentIds(courseId)){
+            removeStudentFromCourse(studentId ,courseId);
+        }
+        */
+        coursesDB.DeleteCourse(courseId);
         coursesDB.saveCourses();
+
     }
 }

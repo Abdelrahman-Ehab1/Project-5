@@ -8,10 +8,7 @@ import models.UserSession;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.List;
 
 public class CourseMangment extends JFrame{
@@ -62,18 +59,24 @@ tempE=EditDelete_Combobox.getSelectedItem().toString();
 if(tempD.isEmpty()||tempT.isEmpty()||(EditDelete_Combobox.getSelectedIndex()==-1))
 {
     JOptionPane.showMessageDialog(Course_Mangment_panel,"Please make Sure you haven't left anything blank");
+    Db.saveUsers();
     return;
+
 }
 if(tempE.equalsIgnoreCase("Edit"))
 {
     m.get(yu).setTitle(tempT);
     m.get(yu).setDescription(tempD);
     Con.updateCourse(m.get(yu));
+    Db.saveUsers();
 }
 else if(tempE.equalsIgnoreCase("Delete"))
                 {
                     Con.deleteCourse(m.get(yu).getCourseId());
-                   m.remove(yu);
+                    m.remove(yu);
+                    Con.removeCourseAsInstructor(m.get(yu).getCourseId());
+                    //removeCourseAsInstructor
+                    Db.saveUsers();
 
                 }
             }
@@ -91,6 +94,7 @@ else if(tempE.equalsIgnoreCase("Delete"))
                     {
                         found=m.get(i);
                         yu=i;
+                        Db.saveUsers();
                         break;
                     }
                 }
@@ -100,6 +104,7 @@ else if(tempE.equalsIgnoreCase("Delete"))
                     {
                         Title_field.setText(found.getTitle());
                     Description_Field.setText(found.getDescription());
+                        Db.saveUsers();
                     }
 
             }
@@ -109,6 +114,7 @@ else if(tempE.equalsIgnoreCase("Delete"))
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 new Instructor_Dashboard();
+                Db.saveUsers();
             }
         });
         NewsaveButton.addActionListener(new ActionListener() {
@@ -118,10 +124,12 @@ else if(tempE.equalsIgnoreCase("Delete"))
                 {
 
                     Con.createCourse(NewTitle_Field.getText(),NewDescription_field.getText(),x);
+                    Db.saveUsers();
                 }
                 else
                 {
                     JOptionPane.showMessageDialog(Course_Mangment_panel,"Please Make sure you didnt leave the Fields Blank");
+                    Db.saveUsers();
                 }
             }
         });
@@ -140,4 +148,5 @@ else if(tempE.equalsIgnoreCase("Delete"))
             }
         });
     }
+
 }

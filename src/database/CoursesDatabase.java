@@ -3,6 +3,7 @@ package database;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import models.Course;
+import models.Lesson;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,30 +14,27 @@ public class CoursesDatabase {
     private List<Course> courses;
     private Gson gson;
 
-
     public CoursesDatabase() {
         this.gson = new Gson();
         loadCourses();
     }
 
-    // getting courses from JSON file
     private void loadCourses() {
         try {
             File file = new File(COURSES_FILE);
             if (!file.exists()) {
                 courses = new ArrayList<>();
-                saveCourses();  // we Create empty File if a file didn't exist
+                saveCourses();
                 return;
             }
 
             FileReader reader = new FileReader(file);
             courses = gson.fromJson(reader, new TypeToken<List<Course>>(){}.getType());
 
-            if (courses == null) {
-                courses = new ArrayList<>();
-            }
+            if (courses == null) courses = new ArrayList<>();
 
             reader.close();
+
         } catch (IOException e) {
             System.err.println("Error loading courses: " + e.getMessage());
             courses = new ArrayList<>();
@@ -53,7 +51,7 @@ public class CoursesDatabase {
 
     public void addCourse(Course course) {
         if (courses.stream().anyMatch(c -> c.getCourseId().equals(course.getCourseId()))) {
-            throw new UnsupportedOperationException("Course already exists");// already exists
+            throw new UnsupportedOperationException("Course already exists");
         }
 
         courses.add(course);
@@ -65,23 +63,32 @@ public class CoursesDatabase {
     }
 
     public Course getCourseById(String courseId) {
-        for (Course course : courses) {
-            if (course.getCourseId().equals(courseId)) {
-                return course;
+        return courses.stream()
+                .filter(c -> c.getCourseId().equals(courseId))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void DeleteCourse(String Id) {
+        courses.removeIf(course -> course.getCourseId().equals(Id));
+        saveCourses();
+    }
+
+    private boolean lessonIdExists(String targetId) {
+        for (Course c : courses) {
+            for (Lesson l : c.getLessons()) {
+                if (l.getLessonId().equals(targetId)) return true;
             }
         }
-        return null;             // we might throw an exception
+        return false;
     }
- public void DeleteCourse(String Id)
- {
-     Course course;
-     for (int i=0;i<courses.size();i++) {
-         if (courses.get(i).getCourseId().equals(Id)) {
-             courses.remove(i);
-             break;
-         }
-         }
-     saveCourses();
 
- }
+    public String generateGlobalLessonId() {
+        int n = 0;
+        while (true) {
+            String id = "L" + String.format("%02d", n);
+            if (!lessonIdExists(id)) return id;
+            n++;
+        }
+    }
 }
