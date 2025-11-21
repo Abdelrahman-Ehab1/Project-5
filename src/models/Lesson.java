@@ -9,7 +9,7 @@ public class Lesson {
 
 
     public Lesson(String lessonId, String title, String content) {
-        this.lessonId = lessonId;
+        setLessonId(lessonId);
         this.title = title;
         this.content = content;
         this.quiz = new Quiz(lessonId);
@@ -30,6 +30,8 @@ public class Lesson {
     public Quiz getQuiz(){ return quiz; }
 
     public void setLessonId(String lessonId) {
+        if(lessonId == null || lessonId.isEmpty())
+            throw new IllegalArgumentException("lesson id can't be empty");
         this.lessonId = lessonId;
     }
 
