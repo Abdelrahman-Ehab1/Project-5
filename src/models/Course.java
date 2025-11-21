@@ -4,22 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
-    //courseId, title, description, instructorId,
-    //lessons[], students[].
 
     private String courseId;
     private String title;
     private String description;
     private String instructorId;
-    private List<Lesson> lessons;      //Composition relationship
+    private List<Lesson> lessons;
     private List<String> studentIds;
 
     public Course(String courseId, String title, String description, String instructorId) {
-
         setCourseId(courseId);
+        setTitle(title);
         setDescription(description);
         setInstructorId(instructorId);
-        setTitle(title);
+
         this.lessons = new ArrayList<>();
         this.studentIds = new ArrayList<>();
     }
@@ -29,10 +27,19 @@ public class Course {
     }
 
     public void setCourseId(String courseId) {
-        if(courseId == null || courseId.isEmpty())     //uniqueness of course id will be handled in add course in db
-            throw new IllegalArgumentException("Course Id can not be empty");
-        else
-            this.courseId = courseId;
+        if (courseId == null || courseId.isEmpty())
+            throw new IllegalArgumentException("Course Id cannot be empty");
+        this.courseId = courseId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        if (title == null || title.isEmpty())
+            throw new IllegalArgumentException("Course title cannot be empty");
+        this.title = title;
     }
 
     public String getDescription() {
@@ -40,10 +47,9 @@ public class Course {
     }
 
     public void setDescription(String description) {
-        if(description == null || description.isEmpty())
-            throw new IllegalArgumentException("Course Description can not be empty");
-        else
-            this.description = description;
+        if (description == null || description.isEmpty())
+            throw new IllegalArgumentException("Course description cannot be empty");
+        this.description = description;
     }
 
     public String getInstructorId() {
@@ -51,36 +57,16 @@ public class Course {
     }
 
     public void setInstructorId(String instructorId) {
-        if(instructorId == null || instructorId.isEmpty())
-            throw new IllegalArgumentException("Instructor's Id can not be empty");
-        else
-            this.instructorId = instructorId;
+        if (instructorId == null || instructorId.isEmpty())
+            throw new IllegalArgumentException("Instructor Id cannot be empty");
+        this.instructorId = instructorId;
     }
 
     public List<Lesson> getLessons() {
         return lessons;
     }
 
-//    public void setLessons(List<Lesson> lessons) {
-//        this.lessons = lessons;
-//    }
-
     public List<String> getStudentIds() {
         return studentIds;
-    }
-
-//    public void setStudentIds(List<String> studentIds) {
-//        this.studentIds = studentIds;
-//    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        if(title == null || title.isEmpty())
-            throw new IllegalArgumentException("Course title can not be empty");
-        else
-            this.title = title;
     }
 }

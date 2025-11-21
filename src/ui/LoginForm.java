@@ -12,7 +12,6 @@ public class LoginForm extends JFrame {
     private JTextField fillEmail;
     private JPasswordField fillPassword;
     private JButton loginBn;
-    // private JButton goToSignupBtn;  // Optional signup redirect button
 
     private AuthService auth;
 
@@ -27,17 +26,11 @@ public class LoginForm extends JFrame {
 
         loginBn.addActionListener(e -> login());
 
-//        if (goToSignupBtn != null) {
-//            goToSignupBtn.addActionListener(e -> {
-//                dispose();
-//                new SignupForm();
-//            });
-//        }
-
         setVisible(true);
     }
 
     private void login() {
+
         String email = fillEmail.getText().trim();
         String password = new String(fillPassword.getPassword()).trim();
 
@@ -53,26 +46,25 @@ public class LoginForm extends JFrame {
             return;
         }
 
-        // Save logged-in user ID
         UserSession.setLoggedInUserId(user.getUserId());
 
         JOptionPane.showMessageDialog(this, "Login successful! Welcome " + user.getUsername());
-if(user.getRole().equalsIgnoreCase("INSTRUCTOR"))
-{
-    setVisible(false);
-   new Instructor_Dashboard();
-}
 
-
-       // dispose();
-        dispose(); // Close login form
-        // Redirect based on role
         String role = user.getRole();
+        if (role == null) {
+            JOptionPane.showMessageDialog(this, "User role is missing in database!");
+            return;
+        }
+
+        dispose();
+
         if (role.equalsIgnoreCase("STUDENT")) {
-            new StudentForm(); // Your student frame
-        } else if (role.equalsIgnoreCase("INSTRUCTOR")) {
-            new Instructor_Dashboard(); // Your instructor frame
-        } else {
+            new StudentForm();
+        }
+        else if (role.equalsIgnoreCase("INSTRUCTOR")) {
+            new Instructor_Dashboard();
+        }
+        else {
             JOptionPane.showMessageDialog(null, "Unknown role! Cannot redirect.");
         }
     }

@@ -1,27 +1,56 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Student extends User {
     private List<String> enrolledCourseIds = new ArrayList<>();
-    private List<String> progressLessonIds = new ArrayList<>();
-    private QuizProgress quizProgress;
+    //private List<String> progressLessonIds = new ArrayList<>();
+    private Map<String, List<String>> progressByCourse = new HashMap<>();
+
+    //map
+    public Map<String, List<String>> getProgressByCourse() {
+        return progressByCourse;
+    }
+
+    //map
+    public void setProgressByCourse(Map<String, List<String>> progressByCourse) {
+        this.progressByCourse = progressByCourse;
+    }
+
+    //map
+    public boolean addProgressLesson(String courseId, String lessonId) {
+        //String uniqueId = courseId+"-"+lessonId;
+        progressByCourse.putIfAbsent(courseId, new ArrayList<>());
+        List<String> lessons = progressByCourse.get(courseId);
+        if (!lessons.contains(lessonId)) {
+            lessons.add(lessonId);
+            return true;
+        }
+        return false;
+    }
+
+    //map
+    public boolean hasCompletedLesson(String courseId, String lessonId) {
+        //String uniqueId = courseId+"-"+lessonId;
+        return progressByCourse.containsKey(courseId) &&
+                progressByCourse.get(courseId).contains(lessonId);
+    }
+
 
     public Student(String username, String email, String passwordHash) {
         super(username, email, passwordHash, "STUDENT");
-        this.quizProgress = new QuizProgress();
     }
 
     public Student(String userId, String username, String email, String passwordHash) {
         super(userId, username, email, passwordHash, "STUDENT", true);
-        this.quizProgress = new QuizProgress();
     }
 
     public Student() {
         super();
         this.role = "STUDENT";
-        this.quizProgress = new QuizProgress();
     }
 
     public List<String> getEnrolledCourseIds() {
@@ -40,19 +69,19 @@ public class Student extends User {
         return false;
     }
 
-    public List<String> getProgressLessonIds() {
-        return progressLessonIds;
-    }
-
-    public void setProgressLessonIds(List<String> progressLessonIds) {
-        this.progressLessonIds = progressLessonIds;
-    }
-
-    public boolean addProgressLesson(String lessonId) {
-        if (!progressLessonIds.contains(lessonId)) {
-            progressLessonIds.add(lessonId);
-            return true;
-        }
-        return false;
-    }
+//    public List<String> getProgressLessonIds() {
+//        return progressLessonIds;
+//    }
+//
+//    public void setProgressLessonIds(List<String> progressLessonIds) {
+//        this.progressLessonIds = progressLessonIds;
+//    }
+//
+//    public boolean addProgressLesson(String lessonId) {
+//        if (!progressLessonIds.contains(lessonId)) {
+//            progressLessonIds.add(lessonId);
+//            return true;
+//        }
+//        return false;
+//    }
 }

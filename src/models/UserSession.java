@@ -1,6 +1,5 @@
 package models;
 
-
 public class UserSession {
 
     private static String loggedInUserId;
@@ -12,9 +11,7 @@ public class UserSession {
     public static String getLoggedInUserId() {
         return loggedInUserId;
     }
-
     public static void clear() {
         loggedInUserId = null;
     }
 }
-

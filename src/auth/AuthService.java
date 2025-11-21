@@ -12,13 +12,9 @@ public class AuthService {
     public AuthService(Database database) {
         this.database = database;
     }
-
-    // Hash password helper
     public String hashPassword(String password) {
         return PasswordUtil.hashSHA256(password);
     }
-
-    // Signup with automatic validation via User class
     public boolean signup(String username, String email, String password, String role) {
         String hashed = hashPassword(password);
 
@@ -37,7 +33,6 @@ public class AuthService {
                 throw new IllegalArgumentException("Role must be STUDENT or INSTRUCTOR");
             }
         } catch (IllegalArgumentException e) {
-            // Pass validation errors to UI
             throw e;
         }
 
@@ -53,13 +48,32 @@ public class AuthService {
         return database.addUser(user);
     }
 
-    // Login method
     public User login(String email, String password) {
         String hashed = hashPassword(password);
         User user = database.findByEmail(email);
-        if (user != null && user.getPasswordHash().equals(hashed)) {
-            return user;
+
+        if (user == null) {
+            return null;
         }
-        return null;
+        if (!user.getPasswordHash().equals(hashed)) {
+            return null;
+        }
+        if ("STUDENT".equalsIgnoreCase(user.getRole())) {
+            return new Student(
+                    user.getUserId(),
+                    user.getUsername(),
+                    user.getEmail(),
+                    user.getPasswordHash()
+            );
+        }
+        if ("INSTRUCTOR".equalsIgnoreCase(user.getRole())) {
+            return new Instructor(
+                    user.getUserId(),
+                    user.getUsername(),
+                    user.getEmail(),
+                    user.getPasswordHash()
+            );
+        }
+        return user;
     }
 }

@@ -58,10 +58,10 @@ public class Lesson_Dashboard extends JFrame {
         NewsaveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-              if(!NewTitle.getText().isEmpty()&&!NewContent.getText().isEmpty())
-                Con.createLesson(NewTitle.getText(),NewContent.getText(),IDD);
-              else
-                  JOptionPane.showMessageDialog(LessonsPanel,"Dont leave Blank");
+                if(!NewTitle.getText().isEmpty()&&!NewContent.getText().isEmpty())
+                    Con.createLesson(NewTitle.getText(),NewContent.getText(),IDD);
+                else
+                    JOptionPane.showMessageDialog(LessonsPanel,"Dont leave Blank");
             }
         });
         editButton.addActionListener(new ActionListener() {
@@ -81,13 +81,13 @@ public class Lesson_Dashboard extends JFrame {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-if(LessonsTable.getValueAt(xm,1).toString().isEmpty())
-{
-    JOptionPane.showMessageDialog(LessonsPanel,"Make sure that  is no Blank");
-    return;
-}
-                        Con.deleteLesson(IDD,LessonsTable.getValueAt(xm,0).toString()
-                        );
+                if(LessonsTable.getValueAt(xm,1).toString().isEmpty())
+                {
+                    JOptionPane.showMessageDialog(LessonsPanel,"Make sure that  is no Blank");
+                    return;
+                }
+                Con.deleteLesson(IDD,LessonsTable.getValueAt(xm,0).toString()
+                );
             }
         });
         searchButton.addActionListener(new ActionListener() {
@@ -107,8 +107,8 @@ if(LessonsTable.getValueAt(xm,1).toString().isEmpty())
                     }
                 }
                 if(!Flag){
-                   JOptionPane.showMessageDialog(LessonsPanel,"Please Enter a valid Course-ID that is accesible by Instructor ");
-                return;
+                    JOptionPane.showMessageDialog(LessonsPanel,"Please Enter a valid Course-ID that is accesible by Instructor ");
+                    return;
                 }
 
                 DefaultTableModel formatt=new DefaultTableModel(mk,0);
@@ -129,8 +129,8 @@ if(LessonsTable.getValueAt(xm,1).toString().isEmpty())
             public void mouseClicked(MouseEvent e) {
                 xm=-1;
                 xm =LessonsTable.getSelectedRow();
-Title_field.setText(LessonsTable.getValueAt(xm,1).toString());
-Content_field.setText(LessonsTable.getValueAt(xm,2).toString());
+                Title_field.setText(LessonsTable.getValueAt(xm,1).toString());
+                Content_field.setText(LessonsTable.getValueAt(xm,2).toString());
             }
         });
     }

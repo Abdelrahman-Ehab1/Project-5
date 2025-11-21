@@ -13,7 +13,7 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="View Enrolled Courses"/>
+          <text value="Unenroll from Courses"/>
         </properties>
       </component>
       <component id="797d0" class="javax.swing.JButton" binding="enrollButton">
@@ -21,7 +21,7 @@
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Discover Courses"/>
+          <text value="Enroll to Courses"/>
         </properties>
       </component>
     </children>
