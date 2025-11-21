@@ -1,31 +1,58 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Student extends User {
-    private ArrayList<Course> enrolledCourses;
-    private ArrayList<Lesson> progress;
+    private List<String> enrolledCourseIds = new ArrayList<>();
+    private List<String> progressLessonIds = new ArrayList<>();
+    private QuizProgress quizProgress;
 
     public Student(String username, String email, String passwordHash) {
         super(username, email, passwordHash, "STUDENT");
-
-        this.enrolledCourses = new ArrayList<>();
-        this.progress = new ArrayList<>();
+        this.quizProgress = new QuizProgress();
     }
 
-    public ArrayList<Course> getEnrolledCourses() {
-        return enrolledCourses;
+    public Student(String userId, String username, String email, String passwordHash) {
+        super(userId, username, email, passwordHash, "STUDENT", true);
+        this.quizProgress = new QuizProgress();
     }
 
-    public void setEnrolledCourses(ArrayList<Course> enrolledCourses) {
-        this.enrolledCourses = enrolledCourses;
+    public Student() {
+        super();
+        this.role = "STUDENT";
+        this.quizProgress = new QuizProgress();
     }
 
-    public ArrayList<Lesson> getProgress() {
-        return progress;
+    public List<String> getEnrolledCourseIds() {
+        return enrolledCourseIds;
     }
 
-    public void setProgress(ArrayList<Lesson> progress) {
-        this.progress = progress;
+    public void setEnrolledCourseIds(List<String> enrolledCourseIds) {
+        this.enrolledCourseIds = enrolledCourseIds;
+    }
+
+    public boolean enrollInCourse(String courseId) {
+        if (!enrolledCourseIds.contains(courseId)) {
+            enrolledCourseIds.add(courseId);
+            return true;
+        }
+        return false;
+    }
+
+    public List<String> getProgressLessonIds() {
+        return progressLessonIds;
+    }
+
+    public void setProgressLessonIds(List<String> progressLessonIds) {
+        this.progressLessonIds = progressLessonIds;
+    }
+
+    public boolean addProgressLesson(String lessonId) {
+        if (!progressLessonIds.contains(lessonId)) {
+            progressLessonIds.add(lessonId);
+            return true;
+        }
+        return false;
     }
 }
