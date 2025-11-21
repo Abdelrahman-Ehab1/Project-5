@@ -165,6 +165,45 @@ public class CoursesController {
         Course c = coursesDB.getCourseById(courseId);
         return c != null ? c.getLessons() : new ArrayList<>();
     }
+//    public void createLesson(String title, String Content,String Course_ID){
+//        int num = coursesDB.getCourseById(Course_ID).getLessons().size();
+//        String Lesson_Id = "L"+"0"+num;
+//        while (coursesDB.getCourseById(Lesson_Id) == null)
+//        {
+//            num++;
+//            Lesson_Id = "L"+"0"+num;
+//        }
+//        Lesson addedCourse = new Lesson(Lesson_Id,title,Content);
+//        coursesDB.getCourseById()
+//        coursesDB.saveCourses();
+//
+//    }
+public void createLesson(String title, String content, String courseId) {
+    Course course = coursesDB.getCourseById(courseId);
+    if (course == null) return;
+
+    int num = course.getLessons().size();
+    String lessonId = "L" + "0" + num;
+
+    // ensure ID is unique
+    boolean exists = true;
+    while (exists) {
+        exists = false;
+        for (Lesson l : course.getLessons()) {
+            if (l.getLessonId().equals(lessonId)) {
+                exists = true;
+                num++;
+                lessonId = "L" + "0" + num;
+                break;
+            }
+        }
+    }
+
+    Lesson newLesson = new Lesson(lessonId, title, content);
+    course.getLessons().add(newLesson);
+    coursesDB.saveCourses();
+}
+
 
     public void createLesson(String title, String content, String courseId) {
         Course course = coursesDB.getCourseById(courseId);

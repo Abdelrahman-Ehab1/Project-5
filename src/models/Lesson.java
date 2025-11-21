@@ -1,5 +1,11 @@
 package models;
 
+import controller.CoursesController;
+import database.CoursesDatabase;
+import database.Database;
+
+import java.util.List;
+
 public class Lesson {
 
     private String lessonId;
