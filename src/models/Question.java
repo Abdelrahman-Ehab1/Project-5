@@ -8,6 +8,8 @@ public class Question {
     private String textQuestion;
     private List<String> options;
     private int correctAnswer;
+    private int number;
+    // add mark attribute
 
     public Question(String textQuestion, int correctAnswer ) {
 
@@ -45,13 +47,18 @@ public class Question {
 
         this.textQuestion = textQuestion;
     }
-    // the following code might get transferred to another class----
 
-    public void addOption(String option){
-        if(option == null || option.isEmpty())
-            throw new IllegalArgumentException("option can not be empty");
-        options.add(option);
+    public int getNumber() {
+        return number;
     }
+
+
+    // the following code might get transferred to another class----
+//    public void addOption(String option){
+//        if(option == null || option.isEmpty())
+//            throw new IllegalArgumentException("option can not be empty");
+//        options.add(option);
+//    }
 
 
 }

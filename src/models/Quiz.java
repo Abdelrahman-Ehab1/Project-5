@@ -7,12 +7,13 @@ public class Quiz {
 
     private List<Question> questions;
     private String lessonId;    //might be unnessecary
+
     public Quiz(String lessonId) {
         setLessonId(lessonId);
         this.questions = new ArrayList<>();
     }
 
-    public List<Question> getQuestions() {
+    public List<Question> getAllQuestions() {
         return questions;
     }
 
@@ -28,5 +29,12 @@ public class Quiz {
 
     public int getNumberOfQuestions(){
         return questions.size();
+    }
+
+    public Question getQuestionByNumber(int number){
+        for(Question question : getAllQuestions()){
+            if(question.getNumber() == number)
+                
+        }
     }
 }
