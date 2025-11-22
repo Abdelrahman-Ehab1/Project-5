@@ -22,8 +22,11 @@ public class QuizProgress {
 //        this.attempts = attempts;
 //    }
     public  boolean addAttempt(){
-        attempts++;
-        return canRetryQuiz();
+        if(canRetryQuiz()){
+            attempts++;
+            return true;
+        }
+        else return false;
     }
 
 //    public boolean isCanRetry() {
@@ -46,7 +49,7 @@ public class QuizProgress {
     public boolean isPassed() {
 
         for (int score :scores){
-            if(score > 50){
+            if(score > 3){
                 passed = true;
                 break;
             }
@@ -63,7 +66,8 @@ public class QuizProgress {
         return scores;
     }
 
-//    public void setScores(List<Integer> scores) {
-//        this.scores = scores;
-//    }
+    public void addScore(int score){
+        if(scores.size() <= 3)
+            scores.add(score);
+    }
 }
