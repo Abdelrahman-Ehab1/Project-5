@@ -11,6 +11,9 @@ public class QuizController {
     private Quiz quiz;
     private QuizProgress quizProgress;
     private String lessonId;
+    private List<Integer> studentAnswer;
+    int marks;
+
 
     public QuizController(String lessonId){
         setLessonId(lessonId);
@@ -52,17 +55,43 @@ public class QuizController {
         addQuestion("what is the capital of Japan?", Arrays.asList("Cairo","Istanbul","Tokyo","New York"), 2);
     };
 
-    public void answerQuizQuestions(List<Integer> answers){
-        quizProgress.addAttempt();
-        int size = quiz.getAllQuestions().size();
+    public List<Integer> getStudentAnswer() {
+        return studentAnswer;
+    }
 
+    public void setStudentAnswer(List<Integer> studentAnswer) {
+        this.studentAnswer = studentAnswer;
+    }
+
+    public void evaluateStudentQuiz(List<Integer> answers){
+       // quizProgress.addAttempt();
+        int size = getStudentAnswer().size();
         for(int i =0;i<size;i++){
-            Question question = quiz.getAllQuestions().get(i);
-            if(question.getCorrectAnswer() == answers.get(i))
+            if(studentAnswer.get(i) == answers.get(i)){
+                marks ++;
+            }
 
-
-
+        }
+        quizProgress.getScores().add(marks);
+    }
+    public boolean isPassed(){
+        if(quizProgress.isPassed()){
+            return true;
+        }
+        else {
+            return false ;
+        }
+    }
+    public boolean canStartQuiz(){// this function will be called from ui
+        quizProgress.addAttempt();
+        if(quizProgress.canRetryQuiz()){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
+
 }
+ // proceed to 3rd point

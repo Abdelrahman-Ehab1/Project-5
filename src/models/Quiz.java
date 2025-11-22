@@ -1,12 +1,12 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Quiz {
-
     private List<Question> questions;
-    //private List<Integer> answers;
+    private List<Integer> answers = Arrays.asList(1, 0, 3, 1, 2);
     private String lessonId;    //might be unnessecary
 
     public Quiz(String lessonId) {

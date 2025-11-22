@@ -21,9 +21,9 @@ public class QuizProgress {
 //    public void setAttempts(int attempts) {
 //        this.attempts = attempts;
 //    }
-    public  boolean addAttempt(){
+    public  void addAttempt(){
         attempts++;
-        return canRetryQuiz();
+        //return canRetryQuiz();
     }
 
 //    public boolean isCanRetry() {
@@ -34,11 +34,12 @@ public class QuizProgress {
 //        this.canRetry = canRetry;
 //    }
     public boolean canRetryQuiz(){
-        if(passed || attempts > 3)
+        if(passed || attempts > 3) { // if the student passed the quiz,he can't retake it // retry policy is to take quiz 3 times as a max
             canRetry = false;
-        // if the student passed the quiz,he can't retake it // retry policy is to take quiz 3 times as a max
-        else
-            canRetry =  true;
+        }
+        else {
+            canRetry = true;
+        }
         return canRetry;
 
     }
@@ -46,7 +47,7 @@ public class QuizProgress {
     public boolean isPassed() {
 
         for (int score :scores){
-            if(score > 50){
+            if(score >= 3){
                 passed = true;
                 break;
             }
