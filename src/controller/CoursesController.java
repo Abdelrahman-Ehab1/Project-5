@@ -20,9 +20,6 @@ public class CoursesController {
         this.usersDB = usersDB;
     }
 
-    /**
-     * Create a new course with an auto-generated ID
-     */
     public void createCourse(String title, String desc, String instructorId) {
         int num = 1;
         String id;
@@ -37,9 +34,7 @@ public class CoursesController {
         coursesDB.saveCourses();
     }
 
-    /**
-     * Update a course
-     */
+
     public boolean updateCourse(Course updatedCourse) {
         List<Course> all = coursesDB.getAllCourses();
 
@@ -54,17 +49,11 @@ public class CoursesController {
         return false;
     }
 
-    /**
-     * Delete a course
-     */
     public void deleteCourse(String courseId) {
         coursesDB.DeleteCourse(courseId);
         coursesDB.saveCourses();
     }
 
-    /**
-     * Get all courses for an instructor
-     */
     public List<Course> getCoursesByInstructor(String instructorId) {
         List<Course> result = new ArrayList<>();
 
@@ -84,9 +73,6 @@ public class CoursesController {
         return coursesDB.getAllCourses();
     }
 
-    /**
-     * Get student from users DB
-     */
     public Student getStudentById(String studentId) {
 
         User user = usersDB.findById(studentId);
@@ -100,9 +86,7 @@ public class CoursesController {
         return (Student) user;
     }
 
-    /**
-     * Enroll a student in a course
-     */
+
     public void addStudentToCourse(String studentId, String courseId) {
 
         Course course = coursesDB.getCourseById(courseId);
@@ -125,9 +109,7 @@ public class CoursesController {
         usersDB.saveUsers();
     }
 
-    /**
-     * Unenroll a student from a course
-     */
+
     public void removeStudentFromCourse(String studentId, String courseId) {
 
         Course course = coursesDB.getCourseById(courseId);
@@ -150,48 +132,6 @@ public class CoursesController {
         return c != null ? c.getStudentIds() : new ArrayList<>();
     }
 
-    /***
-     * Add a lesson with auto-ID
-     *//*
-    public void addLesson(String courseId, Lesson lesson) {
-        Course c = coursesDB.getCourseById(courseId);
-        if (c == null)
-            throw new IllegalArgumentException("Course not found!");
-
-        // Generate lesson ID if not provided
-        if (lesson.getLessonId() == null || lesson.getLessonId().isEmpty()) {
-            lesson.setLessonId(generateLessonId(c));
-        }
-
-        c.getLessons().add(lesson);
-        coursesDB.saveCourses();
-    }
-*/
-   /* /**
-     * Auto-generate lesson IDs inside a course
-     /*
-    private String generateLessonId(Course course) {
-        int n = 1;
-        String id;
-
-        while (true) {
-            id = "L" + n;
-            String finalId = id; // ← الحل هنا
-
-            boolean exists = course.getLessons()
-                    .stream()
-                    .anyMatch(l -> l.getLessonId().equals(finalId));
-
-            if (!exists)
-                return id;
-
-            n++;
-        }
-    }*/
-
-    /**
-     * Update a lesson
-     */
     public void updateLesson(String courseId, Lesson updatedLesson) {
         Course c = coursesDB.getCourseById(courseId);
         if (c == null)
@@ -209,9 +149,6 @@ public class CoursesController {
         }
     }
 
-    /**
-     * Delete a lesson
-     */
     public void deleteLesson(String courseId, String lessonId) {
 
         Course c = coursesDB.getCourseById(courseId);

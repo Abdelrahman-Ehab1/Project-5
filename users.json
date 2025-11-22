@@ -7,6 +7,7 @@
     "role": "INSTRUCTOR"
   },
   {
+<<<<<<< HEAD
     "userId": "57653",
     "username": "body",
     "email": "body@gmail.com",
@@ -23,5 +24,27 @@
     "email": "bodyS@gmail.com",
     "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
     "role": "STUDENT"
+=======
+    "enrolledCourseIds": [
+      "C1"
+    ],
+    "progressByCourse": {
+      "C1": [
+        "L02"
+      ]
+    },
+    "userId": "48805",
+    "username": "hany",
+    "email": "hany@gmail.com",
+    "passwordHash": "5a43516885a4de8583b53322aad977925cceaef3d4b3f679772ad4a42cb658e2",
+    "role": "STUDENT"
+  },
+  {
+    "userId": "30233",
+    "username": "hassan",
+    "email": "hassan@gmail.com",
+    "passwordHash": "16771578794e44505c9da8b3c2d5b4062bf0047580a1088d2b08a043ce5d2edc",
+    "role": "INSTRUCTOR"
+>>>>>>> 7b2496131aa0c36c7accca5537177071d02b2fed
   }
 ]

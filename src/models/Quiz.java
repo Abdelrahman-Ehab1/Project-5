@@ -1,20 +1,24 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Quiz {
-
     private List<Question> questions;
+    private List<Integer> answers = Arrays.asList(1, 0, 3, 1, 2);
     private String lessonId;    //might be unnessecary
+
     public Quiz(String lessonId) {
         setLessonId(lessonId);
         this.questions = new ArrayList<>();
+        //this.answers = new ArrayList<>();
     }
 
-    public List<Question> getQuestions() {
+    public List<Question> getAllQuestions() {
         return questions;
     }
+//    public List
 
     public String getLessonId() {
         return lessonId;
@@ -26,7 +30,22 @@ public class Quiz {
         this.lessonId = lessonId;
     }
 
-    public int getNumberOfQuestions(){
-        return questions.size();
+    public void addQuestion(Question question){
+        if (question==null)
+            throw new IllegalArgumentException("empty question added!");
+        questions.add(question);
     }
+
+//    public int getNumberOfQuestions(){
+//        return questions.size();
+//    }
+//
+//    public Question getQuestionByNumber(int number){
+//        for(Question question : getAllQuestions()){
+//            if(question.getNumber() == number){
+//                return question;
+//            }
+//        }
+//        throw new IllegalArgumentException("no question with this number");
+//    }
 }
