@@ -45,7 +45,7 @@ public class Lesson_Dashboard extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(900,900);
         setLocationRelativeTo(null);
-        String [] mk={"Lesson ID","Title","Content"};
+        String [] mk={"Lesson ID","Title","Content","Quiz AvrMark","Completion Percentage"};
 
         exitButton.addActionListener(new ActionListener() {
             @Override
