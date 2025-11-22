@@ -4,19 +4,23 @@ import models.Question;
 import models.Quiz;
 import models.QuizProgress;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.MatchResult;
 
 public class QuizController {
     private Quiz quiz;
     private QuizProgress quizProgress;
     private String lessonId;
+    private List<Integer> answers;
 
     public QuizController(String lessonId){
         setLessonId(lessonId);
         this.quiz = new Quiz(lessonId);
         this.quizProgress = new QuizProgress();
-
+        this.answers = new ArrayList<>();
     }
 
     public void setLessonId(String lessonId) {
@@ -35,9 +39,17 @@ public class QuizController {
         quiz.getQuestionByNumber(number).getOptions().add(option);
     }*/
 
-    public boolean answerQuestion(int choice, int index){
+    public void setAnswersOfStudent(int choice){
+        answers.add(choice);
+    }
 
-        return choice == index;
+    public boolean isPassed(){
+        if(quizProgress.isPassed()==true){
+            return true;
+        }
+        else {
+            return false ;
+        }
     }
 
     public void addQuestion(String text , List<String> options ,int answerIndex ){
@@ -52,15 +64,22 @@ public class QuizController {
         addQuestion("what is the capital of Japan?", Arrays.asList("Cairo","Istanbul","Tokyo","New York"), 2);
     };
 
-    public void answerQuizQuestions(List<Integer> answers){
-        quizProgress.addAttempt();
-        int size = quiz.getAllQuestions().size();
+    public boolean canTakeQuiz(){
+        return quizProgress.addAttempt();   // called before clicking on retake quiz
+    }
 
-        for(int i =0;i<size;i++){
-            Question question = quiz.getAllQuestions().get(i);
-            if(question.getCorrectAnswer() == answers.get(i))
+    public void getResult(){
+        int mark=0;
+        if(canTakeQuiz()) {
+            quizProgress.addAttempt(); //------------------------------------
+            int size = quiz.getAllQuestions().size();
 
-
+            for (int i = 0; i < size; i++) {
+                Question question = quiz.getAllQuestions().get(i);
+                if (question.getCorrectAnswer() == answers.get(i))
+                    mark++;
+            }
+            quizProgress.addScore(mark);
 
         }
     }
