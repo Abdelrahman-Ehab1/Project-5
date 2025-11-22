@@ -63,11 +63,11 @@ public class QuizController {
         this.studentAnswer = studentAnswer;
     }
 
-    public void evaluateStudentQuiz(List<Integer> answers){
+    public void evaluateStudentQuiz(){
        // quizProgress.addAttempt();
         int size = getStudentAnswer().size();
         for(int i =0;i<size;i++){
-            if(studentAnswer.get(i) == answers.get(i)){
+            if(studentAnswer.get(i) == quiz.getAllQuestions().get(i).getCorrectAnswer()){
                 marks ++;
             }
 
