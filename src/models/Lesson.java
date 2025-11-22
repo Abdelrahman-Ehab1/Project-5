@@ -6,13 +6,14 @@ public class Lesson {
     private String title;
     private String content;
     private Quiz quiz;
+    private float AvrgMark;
 
-
-    public Lesson(String lessonId, String title, String content) {
+    public Lesson(String lessonId, String title, String content){
         this.lessonId = lessonId;
         this.title = title;
         this.content = content;
         this.quiz = new Quiz(lessonId);
+        this.AvrgMark=AvrgMark;
     }
 
     public String getLessonId() {

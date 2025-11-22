@@ -1,1 +1,27 @@
-[{"userId":"98801","username":"Abdo","email":"Abdo@gmail.com","passwordHash":"5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5","role":"INSTRUCTOR"}]
+[
+  {
+    "userId": "98801",
+    "username": "Abdo",
+    "email": "Abdo@gmail.com",
+    "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+    "role": "INSTRUCTOR"
+  },
+  {
+    "userId": "57653",
+    "username": "body",
+    "email": "body@gmail.com",
+    "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+    "role": "INSTRUCTOR"
+  },
+  {
+    "enrolledCourseIds": [
+      "C1"
+    ],
+    "progressByCourse": {},
+    "userId": "89434",
+    "username": "bodyS",
+    "email": "bodyS@gmail.com",
+    "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+    "role": "STUDENT"
+  }
+]
