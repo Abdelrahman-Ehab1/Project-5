@@ -5,6 +5,8 @@ import java.util.List;
 
 public class QuizProgress {
     private int attempts;
+<<<<<<< HEAD
+=======
     private List<Integer> scores;
     private boolean passed;
     private boolean canRetry;
@@ -67,4 +69,5 @@ public class QuizProgress {
 //    public void setScores(List<Integer> scores) {
 //        this.scores = scores;
 //    }
+>>>>>>> 7b2496131aa0c36c7accca5537177071d02b2fed
 }
