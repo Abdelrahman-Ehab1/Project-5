@@ -2,7 +2,6 @@ package ui;
 
 
 import controller.CoursesController;
-import controller.InstructorController;
 import database.CoursesDatabase;
 import database.Database;
 import models.Course;
@@ -39,7 +38,6 @@ public class Lesson_Dashboard extends JFrame {
     int i,xm=-1;
     Course LP;
     String IDD;
-    InstructorController IC=new InstructorController();
     Boolean Flag=false;
     public Lesson_Dashboard() {
         setContentPane(LessonsPanel);
@@ -48,6 +46,7 @@ public class Lesson_Dashboard extends JFrame {
         setSize(900,900);
         setLocationRelativeTo(null);
         String [] mk={"Lesson ID","Title","Content","Quiz AvrMark","Completion Percentage"};
+
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -120,7 +119,7 @@ public class Lesson_Dashboard extends JFrame {
                 }
                 for(i=0;i<kk.size();i++)
                 {
-                    formatt.addRow(new Object[]{kk.get(i).getLessonId(),kk.get(i).getTitle(),kk.get(i).getContent(),IC.LessonAvg(kk.get(i).getLessonId(),IDD),100*IC.LessonCompletion(kk.get(i).getLessonId(),IDD)+"%"});
+                    formatt.addRow(new Object[]{kk.get(i).getLessonId(),kk.get(i).getTitle(),kk.get(i).getContent()});
                 }
                 LessonsTable.setModel(formatt);
             }

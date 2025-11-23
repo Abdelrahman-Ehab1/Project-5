@@ -79,7 +79,7 @@ public class ViewStudents extends JFrame {
         ViewStudentTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Mybar NewBar=new Mybar("Student "+IDs_Students.get(ViewStudentTable.getSelectedRow())+" Chart",IDs_Students.get(ViewStudentTable.getSelectedRow()),Course_ID_Field.getText());
+                Mybar NewBar=new Mybar("Student "+IDs_Students.get(ViewStudentTable.getSelectedRow())+" Chart");
                 NewBar.pack();
                 UIUtils.centerFrameOnScreen(NewBar);
                 NewBar.setVisible(true);
