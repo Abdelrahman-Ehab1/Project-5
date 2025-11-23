@@ -41,7 +41,7 @@ public class StudentController {
 
         if (student == null) return available;
 
-        ArrayList<Course> all = new ArrayList<>(coursesDB.getAllCourses());
+        ArrayList<Course> all = new ArrayList<>(courseController.getApprovedCourses());
         List<String> enrolled = student.getEnrolledCourseIds();
 
         for (Course c : all) {
@@ -90,14 +90,14 @@ public class StudentController {
         return courseController.getStudentById(studentId);
     }
     public void addLessonProgress(String studentId, String lessonId, String courseId) {
-        Student s = courseController.getStudentById(studentId);
+        Student s = (Student) usersDB.findById(studentId);
         //s.addProgressLesson(lessonId);
         s.addProgressLesson(courseId,lessonId);
         usersDB.saveUsers();
     }
     public void removeLessonProgress(String studentId, String lessonId, String courseId) {
         //String uniqueId = courseId+"-"+lessonId;
-        Student s = courseController.getStudentById(studentId);
+        Student s = (Student) usersDB.findById(studentId);
         //s.getProgressLessonIds().remove(lessonId);
         s.getProgressByCourse().get(courseId).remove(lessonId);
         usersDB.saveUsers();

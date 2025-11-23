@@ -12,6 +12,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,24 +27,33 @@ public class ViewStudents extends JFrame {
     int i;
     Boolean Flag=false;
     public ViewStudents() {
-        setVisible(true);
+
         setContentPane(ViewStudentPanel);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(900,600);
         setLocationRelativeTo(null);
-       setSize(900,900);
+
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                Instructor_Dashboard instructor = new Instructor_Dashboard();
+                instructor.setVisible(true);
+                dispose();
+            }
+        });
+        setVisible(true);
         String [] xk={"userId", "role", "username", "email"};
         DefaultTableModel model=new DefaultTableModel(xk,0);
         StudentController m=new StudentController();
         Database Db=new Database();
         CoursesDatabase CD=new CoursesDatabase();
         CoursesController CC=new CoursesController(CD,Db);
-       String Inst_ID=Us.getLoggedInUserId();
-       List<Course> mm=CC.getCoursesByInstructor(Inst_ID);
+        String Inst_ID=Us.getLoggedInUserId();
+        List<Course> mm=CC.getCoursesByInstructor(Inst_ID);
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                        new Instructor_Dashboard();
+                new Instructor_Dashboard();
             }
         });
         searchButton.addActionListener(new ActionListener() {
@@ -53,7 +64,7 @@ public class ViewStudents extends JFrame {
                 {
                     if(mm.get(i).getCourseId().equalsIgnoreCase(Course_ID_Field.getText()))
                     {
-                      Flag=true;
+                        Flag=true;
                         Course Foundd=mm.get(i);
                         List<String> IDs_Students=Foundd.getStudentIds();
                         if(IDs_Students.isEmpty())

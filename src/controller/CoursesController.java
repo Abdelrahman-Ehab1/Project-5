@@ -19,6 +19,15 @@ public class CoursesController {
         this.coursesDB = coursesDB;
         this.usersDB = usersDB;
     }
+    public List<Course> getApprovedCourses() {
+        List<Course> approved = new ArrayList<>();
+        for (Course c : coursesDB.getAllCourses()) {
+            if ("APPROVED".equals(c.getApprovalStatus())) {
+                approved.add(c);
+            }
+        }
+        return approved;
+    }
 
     public void createCourse(String title, String desc, String instructorId) {
         int num = 1;
@@ -30,6 +39,7 @@ public class CoursesController {
         } while (coursesDB.getCourseById(id) != null);
 
         Course course = new Course(id, title, desc, instructorId);
+        course.setApprovalStatus("PENDING");
         coursesDB.addCourse(course);
         coursesDB.saveCourses();
     }

@@ -4,6 +4,9 @@ import javax.swing.*;
 import auth.AuthService;
 import database.Database;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 public class SignupForm extends JFrame {
 
     private JPanel SignupPanel;
@@ -18,8 +21,8 @@ public class SignupForm extends JFrame {
     public SignupForm() {
         setTitle("Signup Form");
         setContentPane(SignupPanel);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
+        setSize(900, 600);
+        // pack();
         setLocationRelativeTo(null);
 
         auth = new AuthService(new Database());
@@ -27,6 +30,16 @@ public class SignupForm extends JFrame {
 
 
         signupBn.addActionListener(e -> handleSignup());
+
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                Mainwindow window = new Mainwindow();
+                window.setVisible(true);
+                dispose();
+            }
+        });
     }
 
     private void handleSignup() {
