@@ -1,6 +1,7 @@
 package ui;
 
 import controller.CoursesController;
+import controller.InstructorController;
 import database.CoursesDatabase;
 import database.Database;
 import models.Course;
@@ -35,7 +36,7 @@ public class CourseMangment extends JFrame{
     CoursesController Con=new CoursesController(CD,Db);
     String x= UserSession.getLoggedInUserId();
     List<Course> m=Con.getCoursesByInstructor(x);
-
+    InstructorController IC=new InstructorController();
     public CourseMangment() {
         setContentPane(Course_Mangment_panel);
         setVisible(true);
@@ -43,11 +44,11 @@ public class CourseMangment extends JFrame{
         setLocationRelativeTo(null);
         setSize(900,900);
 
-        String [] mk={"Course ID","Description","InstructorID","Title"};
+        String [] mk={"Course ID","Description","InstructorID","Title","Course Completion percantage"};
         DefaultTableModel formatt=new DefaultTableModel(mk,0);
         for(i=0;i<m.size();i++)
         {
-            formatt.addRow(new Object[]{m.get(i).getCourseId(),m.get(i).getDescription(),m.get(i).getInstructorId(),m.get(i).getTitle()});
+            formatt.addRow(new Object[]{m.get(i).getCourseId(),m.get(i).getDescription(),m.get(i).getInstructorId(),m.get(i).getTitle(),100*IC.CourseCompletion(m.get(i).getCourseId())+"%"});
         }
         Courses_Table.setModel(formatt);
         Save_but.addActionListener(new ActionListener() {
