@@ -9,6 +9,8 @@ public class Student extends User {
     private List<String> enrolledCourseIds = new ArrayList<>();
     //private List<String> progressLessonIds = new ArrayList<>();
     private Map<String, List<String>> progressByCourse = new HashMap<>();
+    private Map<String, QuizProgress> quizProgress = new HashMap<>();      // nasser
+    //private List<Certificate> certificates = new ArrayList<>();
 
     //map
     public Map<String, List<String>> getProgressByCourse() {
@@ -84,4 +86,27 @@ public class Student extends User {
 //        }
 //        return false;
 //    }
+
+
+    public Map<String, QuizProgress> getQuizProgress() {  // we return the whole map
+        return quizProgress;
+    }
+
+    public QuizProgress getQuizProgressForLesson(String lessonId) {  //we return the quiz progress object for that lesson
+        return quizProgress.get(lessonId);
+    }
+
+    public void saveQuizProgress(String lessonId, QuizProgress progress) {  // when a student finished a quiz, this method must get called
+        quizProgress.put(lessonId, progress);
+    }
+
+    /*public List<Certificate> getCertificates(){
+        return this.certificates;
+    }
+
+    public void addCertificate(Certificate certificate){
+        certificates.add(certificate);
+    }
+
+     */
 }

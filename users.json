@@ -23,6 +23,7 @@
   {
     "enrolledCourseIds": [],
     "progressByCourse": {},
+    "quizProgress": {},
     "userId": "78363",
     "username": "Student1",
     "email": "Student1@gmail.com",
@@ -32,6 +33,7 @@
   {
     "enrolledCourseIds": [],
     "progressByCourse": {},
+    "quizProgress": {},
     "userId": "73982",
     "username": "Student2",
     "email": "Student2@gmail.com",
@@ -41,14 +43,18 @@
   {
     "enrolledCourseIds": [
       "C9",
-      "C12",
-      "C13"
+      "C13",
+      "C12"
     ],
     "progressByCourse": {
       "C9": [
         "L00"
+      ],
+      "C12": [
+        "L02"
       ]
     },
+    "quizProgress": {},
     "userId": "70182",
     "username": "hany",
     "email": "hany@gmail.com",
@@ -67,6 +73,7 @@
       "C1"
     ],
     "progressByCourse": {},
+    "quizProgress": {},
     "userId": "52323",
     "username": "ali",
     "email": "ali1@gmail.com",
@@ -88,6 +95,7 @@
       "C11"
     ],
     "progressByCourse": {},
+    "quizProgress": {},
     "userId": "88559",
     "username": "s1",
     "email": "s1@gmail.com",

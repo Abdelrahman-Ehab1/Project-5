@@ -193,27 +193,28 @@ public class AccessLessonsForm extends JFrame {
                                 table1.setValueAt(false, row, col);
                             }
                         } else { // no is chosen
+
                             table1.setValueAt(false, row, col);
                         }
                     }
 //                    else{
-//                            //JOptionPane.showMessageDialog(AccessLessonsForm.this,"You already passed this quiz before");
+//                            JOptionPane.showMessageDialog(AccessLessonsForm.this,"You already passed this quiz before");
 //                        }
                     }
                 }
-                else {
-                    int choice2 = JOptionPane.showConfirmDialog(AccessLessonsForm.this,
-                            "Do you want to remove this finished lesson ? , note: your previous recorded quiz will be removed"
-                            ,"Remove lesson",
-                            JOptionPane.YES_NO_OPTION);
-                    if(choice2==JOptionPane.YES_OPTION) {
-                        controller.setCurrentStudent(currentUserId);
-                        controller.removeLessonProgress(currentUserId, lessonId, courseId);
-                    }
-                    else{
-                        return;
-                    }
-                }
+//                else {
+//                    int choice2 = JOptionPane.showConfirmDialog(AccessLessonsForm.this,
+//                            "Do you want to remove this finished lesson ? , note: your previous recorded quiz will be removed"
+//                            ,"Remove lesson",
+//                            JOptionPane.YES_NO_OPTION);
+//                    if(choice2==JOptionPane.YES_OPTION) {
+//                        controller.setCurrentStudent(currentUserId);
+//                        controller.removeLessonProgress(currentUserId, lessonId, courseId);
+//                    }
+//                    else{
+//                        return;
+//                    }
+//                }
             }
         });
     }
