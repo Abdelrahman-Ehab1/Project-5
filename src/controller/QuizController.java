@@ -11,6 +11,14 @@ import java.util.Map;
 import java.util.regex.MatchResult;
 
 public class QuizController {
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
     private Quiz quiz;
     private QuizProgress quizProgress;
     private String lessonId;

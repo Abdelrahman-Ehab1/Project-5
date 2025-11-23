@@ -35,6 +35,7 @@ public class CoursesController {
         } while (coursesDB.getCourseById(id) != null);
 
         Course course = new Course(id, title, desc, instructorId);
+        course.setApprovalStatus("PENDING");
         coursesDB.addCourse(course);
         coursesDB.saveCourses();
     }

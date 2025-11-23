@@ -33,6 +33,13 @@ public class CoursesDatabase {
 
             if (courses == null) courses = new ArrayList<>();
 
+            // update by boda to check approval status always exists
+            for (Course course : courses) {
+                if (course.getApprovalStatus() == null || course.getApprovalStatus().isEmpty()) {
+                    course.setApprovalStatus("PENDING");
+                }
+            }
+
             reader.close();
 
         } catch (IOException e) {

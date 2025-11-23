@@ -11,6 +11,7 @@ public class Course {
     private String instructorId;
     private List<Lesson> lessons;
     private List<String> studentIds;
+    private String approvalStatus = "PENDING";
 
     public Course(String courseId, String title, String description, String instructorId) {
         setCourseId(courseId);
@@ -18,6 +19,7 @@ public class Course {
         setDescription(description);
         setInstructorId(instructorId);
 
+        this.approvalStatus = "PENDING";
         this.lessons = new ArrayList<>();
         this.studentIds = new ArrayList<>();
     }

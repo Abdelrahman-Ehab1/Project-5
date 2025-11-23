@@ -31,8 +31,6 @@ public class QuizProgress {
         } else {
             canRetry = true;
         }
-        return canRetry;
-
     }
 
     public boolean isPassed() {

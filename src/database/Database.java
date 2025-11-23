@@ -42,6 +42,9 @@ public class Database {
                             : "STUDENT";
 
                     switch (role) {
+                        case "ADMIN":
+                            users.add(gson.fromJson(obj, Admin.class));
+                            break;
                         case "INSTRUCTOR":
                             users.add(gson.fromJson(obj, Instructor.class));
                             break;

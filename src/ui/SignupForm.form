@@ -80,6 +80,7 @@
           <model>
             <item value="STUDENT"/>
             <item value="INSTRUCTOR"/>
+            <item value="ADMIN"/>
           </model>
         </properties>
       </component>

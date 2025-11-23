@@ -6,7 +6,16 @@ import java.util.List;
 
 public class Quiz {
     private List<Question> questions;
-    private List<Integer> answers = Arrays.asList(1, 0, 3, 1, 2);
+
+    public List<Integer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Integer> answers) {
+        this.answers = answers;
+    }
+
+    private  List<Integer> answers = Arrays.asList(1, 0, 3, 1, 2);
     private String lessonId;    //might be unnessecary
 
     public Quiz(String lessonId) {
