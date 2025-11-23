@@ -14,6 +14,11 @@ public class Lesson {
         this.content = content;
         this.quiz = new Quiz(lessonId);
     }
+    public Lesson(String lessonId){
+        setLessonId(lessonId);
+        this.quiz = new Quiz(lessonId);
+        // we still need to check for title and content
+    }
 
     public String getLessonId() {
         return lessonId;
