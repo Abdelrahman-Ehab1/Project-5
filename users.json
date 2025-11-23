@@ -22,7 +22,7 @@
   },
   {
     "enrolledCourseIds": [],
-    "progressLessonIds": [],
+    "progressByCourse": {},
     "userId": "78363",
     "username": "Student1",
     "email": "Student1@gmail.com",
@@ -31,7 +31,7 @@
   },
   {
     "enrolledCourseIds": [],
-    "progressLessonIds": [],
+    "progressByCourse": {},
     "userId": "73982",
     "username": "Student2",
     "email": "Student2@gmail.com",
@@ -40,12 +40,15 @@
   },
   {
     "enrolledCourseIds": [
-      "C1"
+      "C9",
+      "C12",
+      "C13"
     ],
-    "progressLessonIds": [
-      "L01",
-      "L02"
-    ],
+    "progressByCourse": {
+      "C9": [
+        "L00"
+      ]
+    },
     "userId": "70182",
     "username": "hany",
     "email": "hany@gmail.com",
@@ -63,7 +66,7 @@
     "enrolledCourseIds": [
       "C1"
     ],
-    "progressLessonIds": [],
+    "progressByCourse": {},
     "userId": "52323",
     "username": "ali",
     "email": "ali1@gmail.com",
@@ -84,9 +87,7 @@
       "C7",
       "C11"
     ],
-    "progressLessonIds": [
-      "L00"
-    ],
+    "progressByCourse": {},
     "userId": "88559",
     "username": "s1",
     "email": "s1@gmail.com",
