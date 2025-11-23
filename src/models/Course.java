@@ -11,6 +11,7 @@ public class Course {
     private String instructorId;
     private List<Lesson> lessons;
     private List<String> studentIds;
+    private String approvalStatus = "PENDING";
 
     public Course(String courseId, String title, String description, String instructorId) {
         setCourseId(courseId);
@@ -18,6 +19,7 @@ public class Course {
         setDescription(description);
         setInstructorId(instructorId);
 
+        this.approvalStatus = "PENDING";
         this.lessons = new ArrayList<>();
         this.studentIds = new ArrayList<>();
     }
@@ -68,5 +70,17 @@ public class Course {
 
     public List<String> getStudentIds() {
         return studentIds;
+    }
+
+    // update by boda
+
+    public String getApprovalStatus() { return approvalStatus; }
+    public void setApprovalStatus(String approvalStatus) {
+        if (approvalStatus == null)
+            approvalStatus = "PENDING";
+        this.approvalStatus = approvalStatus;
+    }
+    public boolean isApproved() {
+        return "APPROVED".equalsIgnoreCase(approvalStatus);
     }
 }

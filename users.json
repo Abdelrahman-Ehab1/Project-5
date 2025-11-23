@@ -1,33 +1,110 @@
 [
   {
-    "userId": "98801",
+    "userId": "19572",
+    "username": "boda",
+    "email": "boda@gmail.com",
+    "passwordHash": "f05cf0e1b0f53e4962118589d0dea67fcc461280dc7f1fbdc297ba2ec3d1070a",
+    "role": "INSTRUCTOR"
+  },
+  {
+    "userId": "70946",
+    "username": "ali",
+    "email": "ali@gmail.com",
+    "passwordHash": "4e0227879fc12b66dc2571615a5466cb7bd2582efe1c00d888e35aa0cc254089",
+    "role": "INSTRUCTOR"
+  },
+  {
+    "userId": "59020",
     "username": "Abdo",
     "email": "Abdo@gmail.com",
     "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
     "role": "INSTRUCTOR"
   },
   {
+    "enrolledCourseIds": [],
+    "progressLessonIds": [],
+    "userId": "78363",
+    "username": "Student1",
+    "email": "Student1@gmail.com",
+    "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+    "role": "STUDENT"
+  },
+  {
+    "enrolledCourseIds": [],
+    "progressLessonIds": [],
+    "userId": "73982",
+    "username": "Student2",
+    "email": "Student2@gmail.com",
+    "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+    "role": "STUDENT"
+  },
+  {
     "enrolledCourseIds": [
-      "C1",
-      "C2"
+      "C1"
     ],
-    "progressByCourse": {
-      "C1": [],
-      "C2": [
-        "L01"
-      ]
-    },
-    "userId": "48805",
+    "progressLessonIds": [
+      "L01",
+      "L02"
+    ],
+    "userId": "70182",
     "username": "hany",
     "email": "hany@gmail.com",
     "passwordHash": "5a43516885a4de8583b53322aad977925cceaef3d4b3f679772ad4a42cb658e2",
     "role": "STUDENT"
   },
   {
-    "userId": "30233",
+    "userId": "24286",
     "username": "hassan",
     "email": "hassan@gmail.com",
     "passwordHash": "16771578794e44505c9da8b3c2d5b4062bf0047580a1088d2b08a043ce5d2edc",
+    "role": "INSTRUCTOR"
+  },
+  {
+    "enrolledCourseIds": [
+      "C1"
+    ],
+    "progressLessonIds": [],
+    "userId": "52323",
+    "username": "ali",
+    "email": "ali1@gmail.com",
+    "passwordHash": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
+    "role": "STUDENT"
+  },
+  {
+    "userId": "71858",
+    "username": "admin",
+    "email": "admin@gmail.com",
+    "passwordHash": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
+    "role": "ADMIN"
+  },
+  {
+    "enrolledCourseIds": [
+      "C6",
+      "C4",
+      "C7",
+      "C11"
+    ],
+    "progressLessonIds": [
+      "L00"
+    ],
+    "userId": "88559",
+    "username": "s1",
+    "email": "s1@gmail.com",
+    "passwordHash": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
+    "role": "STUDENT"
+  },
+  {
+    "userId": "26282",
+    "username": "i1",
+    "email": "i1@gmail.com",
+    "passwordHash": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
+    "role": "INSTRUCTOR"
+  },
+  {
+    "userId": "32950",
+    "username": "i2",
+    "email": "i2@gmail.com",
+    "passwordHash": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
     "role": "INSTRUCTOR"
   }
 ]

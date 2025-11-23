@@ -28,14 +28,14 @@ public class Mainwindow extends JFrame {
                 dispose();
             }
         });
-         SignupBn.addActionListener(new ActionListener() {
+        SignupBn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SignupForm signupForm = new SignupForm();
                 signupForm.setVisible(true);
                 dispose();
             }
-         });
+        });
 
     }
 }
