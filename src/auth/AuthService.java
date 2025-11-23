@@ -29,6 +29,9 @@ public class AuthService {
                 user = new Student(username, email, hashed);
             } else if ("INSTRUCTOR".equals(role)) {
                 user = new Instructor(username, email, hashed);
+                else if ("ADMIN".equals(role)) {
+                    user = new Admin(username, email, hashed);
+                }
             } else {
                 throw new IllegalArgumentException("Role must be STUDENT or INSTRUCTOR");
             }
@@ -40,6 +43,9 @@ public class AuthService {
         while (database.findById(user.getUserId()) != null) {
             if ("STUDENT".equals(role)) {
                 user = new Student(username, email, hashed);
+                else if ("ADMIN".equals(role)) {
+                    user = new Admin(username, email, hashed);
+                }
             } else {
                 user = new Instructor(username, email, hashed);
             }
@@ -68,6 +74,14 @@ public class AuthService {
         }
         if ("INSTRUCTOR".equalsIgnoreCase(user.getRole())) {
             return new Instructor(
+                    user.getUserId(),
+                    user.getUsername(),
+                    user.getEmail(),
+                    user.getPasswordHash()
+            );
+        }
+        if ("ADMIN".equalsIgnoreCase(user.getRole())) {
+            return new Admin(
                     user.getUserId(),
                     user.getUsername(),
                     user.getEmail(),
