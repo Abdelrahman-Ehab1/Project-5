@@ -72,15 +72,11 @@ public class Course {
         return studentIds;
     }
 
-    // update by boda
-
-    public String getApprovalStatus() { return approvalStatus; }
-    public void setApprovalStatus(String approvalStatus) {
-        if (approvalStatus == null)
-            approvalStatus = "PENDING";
-        this.approvalStatus = approvalStatus;
-    }
-    public boolean isApproved() {
-        return "APPROVED".equalsIgnoreCase(approvalStatus);
+    public Lesson getLessonById(String lessonId){
+        for (Lesson lesson : lessons){
+            if(lesson.getLessonId().equals(lessonId))
+                return lesson;
+        }
+        return null;
     }
 }

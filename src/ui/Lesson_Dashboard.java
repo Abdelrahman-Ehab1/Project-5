@@ -1,6 +1,7 @@
 package ui;
 
 import controller.CoursesController;
+import controller.InstructorController;
 import database.CoursesDatabase;
 import database.Database;
 import models.Course;
@@ -29,25 +30,28 @@ public class Lesson_Dashboard extends JFrame {
     private JTextField NewContent;
     private JButton exitButton;
     private JPanel LessonsPanel;
-
-    Database Db = new Database();
-    CoursesDatabase CD = new CoursesDatabase();
-    CoursesController Con = new CoursesController(CD, Db);
-
-    String instructorId = UserSession.getLoggedInUserId();
-    List<Course> instructorCourses = Con.getCoursesByInstructor(instructorId);
-
-    List<Lesson> lessonList;
-    Course selectedCourse;
-    String selectedCourseId;
-    int selectedRow = -1;
-
+    Database Db=new Database();
+    List<Lesson> kk;
+    CoursesDatabase CD=new CoursesDatabase();
+    CoursesController Con=new CoursesController(CD,Db);
+    String x= UserSession.getLoggedInUserId();
+    List<Course> m=Con.getCoursesByInstructor(x);
+    int i,xm=-1;
+    Course LP;
+    String IDD;
+    InstructorController IC=new InstructorController();
+    Boolean Flag=false;
     public Lesson_Dashboard() {
 
         setContentPane(LessonsPanel);
         setSize(900, 600);
         setLocationRelativeTo(null);
-
+        String [] mk={"Lesson ID","Title","Content","Quiz AvrMark","Completion Percentage"};
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                new Instructor_Dashboard();
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -135,16 +139,15 @@ public class Lesson_Dashboard extends JFrame {
             refreshLessonsTable(tableColumns);
         });
 
-        // update by boda
-        searchButton.addActionListener(e -> {
-
-            selectedCourseId = CourseID_field.getText();
-            selectedCourse = null;
-
-            for (Course c : instructorCourses) {
-                if (c.getCourseId().equalsIgnoreCase(selectedCourseId)) {
-                    selectedCourse = c;
-                    break;
+                DefaultTableModel formatt=new DefaultTableModel(mk,0);
+                kk=LP.getLessons();
+                if(kk.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(LessonsPanel,"There is no lessons in this course");
+                }
+                for(i=0;i<kk.size();i++)
+                {
+                    formatt.addRow(new Object[]{kk.get(i).getLessonId(),kk.get(i).getTitle(),kk.get(i).getContent(),IC.LessonAvg(kk.get(i).getLessonId(),IDD),100*IC.LessonCompletion(kk.get(i).getLessonId(),IDD)+"%"});
                 }
             }
 

@@ -1,6 +1,7 @@
 package ui;
 
 import controller.CoursesController;
+import controller.InstructorController;
 import database.CoursesDatabase;
 import database.Database;
 import models.Course;
@@ -25,43 +26,27 @@ public class CourseMangment extends JFrame {
     private JTextField NewDescription_field;
     private JButton NewsaveButton;
     private JButton NewexitButton;
-
-    Course found = null;
-    int i, yu;
-    String tempT, tempD, tempE;
-
-    Database Db = new Database();
-    CoursesDatabase CD = new CoursesDatabase();
-    CoursesController Con = new CoursesController(CD, Db);
-    String x = UserSession.getLoggedInUserId();
-    List<Course> m = Con.getCoursesByInstructor(x);
-
+    Course found=null;
+    int i,yu;
+    String tempT,tempD,tempE;
+    Course mm=new Course("1234","adad","59020","hhjj");
+    Course ml=new Course("1235","dada","59020","jjhh");
+    Database Db=new Database();
+    CoursesDatabase CD=new CoursesDatabase();
+    CoursesController Con=new CoursesController(CD,Db);
+    String x= UserSession.getLoggedInUserId();
+    List<Course> m=Con.getCoursesByInstructor(x);
+    InstructorController IC=new InstructorController();
     public CourseMangment() {
         setContentPane(Course_Mangment_panel);
         setSize(900, 600);
         setLocationRelativeTo(null);
 
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                Instructor_Dashboard instructor = new Instructor_Dashboard();
-                instructor.setVisible(true);
-                dispose();
-            }
-        });
-
-        String[] mk = {"Course ID", "Description", "InstructorID", "Title", "Status"};
-
-        DefaultTableModel formatt = new DefaultTableModel(mk, 0);
-        for (i = 0; i < m.size(); i++) {
-            formatt.addRow(new Object[]{
-                    m.get(i).getCourseId(),
-                    m.get(i).getDescription(),
-                    m.get(i).getInstructorId(),
-                    m.get(i).getTitle(),
-                    m.get(i).getApprovalStatus()
-            });
+        String [] mk={"Course ID","Description","InstructorID","Title","Course Completion percantage"};
+        DefaultTableModel formatt=new DefaultTableModel(mk,0);
+        for(i=0;i<m.size();i++)
+        {
+            formatt.addRow(new Object[]{m.get(i).getCourseId(),m.get(i).getDescription(),m.get(i).getInstructorId(),m.get(i).getTitle(),100*IC.CourseCompletion(m.get(i).getCourseId())+"%"});
         }
         Courses_Table.setModel(formatt);
 

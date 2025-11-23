@@ -21,20 +21,19 @@
     "role": "INSTRUCTOR"
   },
   {
-    "enrolledCourseIds": [],
-    "progressByCourse": {},
-    "userId": "78363",
-    "username": "Student1",
-    "email": "Student1@gmail.com",
+    "userId": "57653",
+    "username": "body",
+    "email": "body@gmail.com",
     "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-    "role": "STUDENT"
+    "role": "INSTRUCTOR"
   },
   {
     "enrolledCourseIds": [],
     "progressByCourse": {},
-    "userId": "73982",
-    "username": "Student2",
-    "email": "Student2@gmail.com",
+    "quizProgress": {},
+    "userId": "89434",
+    "username": "bodyS",
+    "email": "bodyS@gmail.com",
     "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
     "role": "STUDENT"
   },
@@ -45,67 +44,81 @@
       "C13"
     ],
     "progressByCourse": {
-      "C9": [
-        "L00"
+      "C1": [
+        "L01",
+        "L02",
+        "L03"
       ]
     },
-    "userId": "70182",
-    "username": "hany",
-    "email": "hany@gmail.com",
-    "passwordHash": "5a43516885a4de8583b53322aad977925cceaef3d4b3f679772ad4a42cb658e2",
+    "quizProgress": {
+      "L01": {
+        "attempts": 2,
+        "scores": [
+          2,
+          3
+        ],
+        "passed": true,
+        "canRetry": true,
+        "Avg": 0.0
+      },
+      "L02": {
+        "attempts": 1,
+        "scores": [
+          3
+        ],
+        "passed": true,
+        "canRetry": true,
+        "Avg": 0.0
+      },
+      "L03": {
+        "attempts": 2,
+        "scores": [
+          2,
+          3
+        ],
+        "passed": true,
+        "canRetry": true,
+        "Avg": 0.0
+      }
+    },
+    "userId": "96210",
+    "username": "1234",
+    "email": "1234@gmail.com",
+    "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
     "role": "STUDENT"
-  },
-  {
-    "userId": "24286",
-    "username": "hassan",
-    "email": "hassan@gmail.com",
-    "passwordHash": "16771578794e44505c9da8b3c2d5b4062bf0047580a1088d2b08a043ce5d2edc",
-    "role": "INSTRUCTOR"
   },
   {
     "enrolledCourseIds": [
       "C1"
     ],
     "progressByCourse": {},
-    "userId": "52323",
-    "username": "ali",
-    "email": "ali1@gmail.com",
-    "passwordHash": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
+    "quizProgress": {
+      "L02": {
+        "attempts": 1,
+        "scores": [
+          2
+        ],
+        "passed": false,
+        "canRetry": true,
+        "Avg": 0.0
+      }
+    },
+    "userId": "75639",
+    "username": "12345",
+    "email": "12345@gmail.com",
+    "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
     "role": "STUDENT"
-  },
-  {
-    "userId": "71858",
-    "username": "admin",
-    "email": "admin@gmail.com",
-    "passwordHash": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
-    "role": "ADMIN"
   },
   {
     "enrolledCourseIds": [
-      "C6",
-      "C4",
-      "C7",
-      "C11"
+      "C1"
     ],
     "progressByCourse": {},
-    "userId": "88559",
-    "username": "s1",
-    "email": "s1@gmail.com",
-    "passwordHash": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
+    "quizProgress": {},
+    "userId": "58979",
+    "username": "1234566",
+    "email": "123456@gmail.com",
+    "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
     "role": "STUDENT"
-  },
-  {
-    "userId": "26282",
-    "username": "i1",
-    "email": "i1@gmail.com",
-    "passwordHash": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
-    "role": "INSTRUCTOR"
-  },
-  {
-    "userId": "32950",
-    "username": "i2",
-    "email": "i2@gmail.com",
-    "passwordHash": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
-    "role": "INSTRUCTOR"
   }
 ]
