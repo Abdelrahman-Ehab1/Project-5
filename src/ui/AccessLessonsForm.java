@@ -4,10 +4,7 @@ import controller.CoursesController;
 import controller.StudentController;
 import database.CoursesDatabase;
 import database.Database;
-import models.Course;
-import models.Lesson;
-import models.Student;
-import models.UserSession;
+import models.*;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -139,7 +136,34 @@ public class AccessLessonsForm extends JFrame {
                 String lessonId = table1.getValueAt(row, 0).toString();
 
                 if (newValue) {
-                    controller.addLessonProgress(currentUserId, lessonId, courseId);
+                    //controller.addLessonProgress(currentUserId, lessonId, courseId);
+                    {
+                        int choice = JOptionPane.showConfirmDialog(AccessLessonsForm.this,
+                                "Do you want to start the quiz for this lesson",
+                                "Quiz is Required",JOptionPane.YES_NO_OPTION
+                                );
+                        if(choice == JOptionPane.YES_OPTION){
+                            QuizForm quizForm = new QuizForm(courseId, lessonId,currentUserId);
+                            quizForm.setVisible(true);
+                            dispose();
+
+                            boolean passed = quizForm.passedQuiz() ;
+
+                            if(passed){ // yes is chosen and quiz is passed
+                                controller.addLessonProgress(currentUserId, lessonId, courseId);
+                                table1.setValueAt(true,row, col);
+                            }
+                            else{ // yes is chosen and quiz is failed
+                                JOptionPane.showMessageDialog(AccessLessonsForm.this,
+                                        "You must pass the quiz to finish this lesson",
+                                        "Quiz not passed",JOptionPane.WARNING_MESSAGE);
+                                table1.setValueAt(false, row, col);
+                            }
+                        }
+                        else{ // no is chosen
+                            table1.setValueAt(false, row, col);
+                        }
+                    }
                 } else {
                     controller.removeLessonProgress(currentUserId, lessonId, courseId);
                 }

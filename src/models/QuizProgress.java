@@ -35,13 +35,11 @@ public class QuizProgress {
 //    }
     public boolean canRetryQuiz(){
         if(passed || attempts > 3) { // if the student passed the quiz,he can't retake it // retry policy is to take quiz 3 times as a max
-            canRetry = false;
+            return false;
         }
         else {
-            canRetry = true;
+            return true;
         }
-        return canRetry;
-
     }
 
     public boolean isPassed() {
