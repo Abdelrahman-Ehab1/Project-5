@@ -69,4 +69,12 @@ public class Course {
     public List<String> getStudentIds() {
         return studentIds;
     }
+
+    public Lesson getLessonById(String lessonId){
+        for (Lesson lesson : lessons){
+            if(lesson.getLessonId().equals(lessonId))
+                return lesson;
+        }
+        return null;
+    }
 }

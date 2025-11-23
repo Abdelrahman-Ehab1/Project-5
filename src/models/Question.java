@@ -20,8 +20,8 @@ public class Question {
 
     public Question(String textQuestion, List<String> options, int correctAnswer){
         setTextQuestion(textQuestion);
-        setCorrectAnswer(correctAnswer);
         setOptions(options);
+        setCorrectAnswer(correctAnswer);
     }
 
     public int getCorrectAnswer() {
@@ -29,7 +29,7 @@ public class Question {
     }
 
     public void setCorrectAnswer(int correctAnswer) {
-        if(correctAnswer < 1 || correctAnswer > options.size())
+        if(correctAnswer < 0 || correctAnswer > options.size())
             throw new IllegalArgumentException("choices out of range");
 
         this.correctAnswer = correctAnswer;

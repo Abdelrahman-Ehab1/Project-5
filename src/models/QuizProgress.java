@@ -18,26 +18,17 @@ public class QuizProgress {
         return attempts;
     }
 
-//    public void setAttempts(int attempts) {
-//        this.attempts = attempts;
-//    }
     public  void addAttempt(){
         attempts++;
-        //return canRetryQuiz();
     }
 
-//    public boolean isCanRetry() {
-//        return canRetry;
-//    }
-
-//    public void setCanRetry(boolean canRetry) {
-//        this.canRetry = canRetry;
-//    }
     public boolean canRetryQuiz(){
-        if(passed || attempts > 3) { // if the student passed the quiz,he can't retake it // retry policy is to take quiz 3 times as a max
+        // if the student passed the quiz,he can't retake it // retry policy is to take quiz 3 times as a max
+        if (passed) {
             canRetry = false;
-        }
-        else {
+        } else if (attempts >= 3) {
+            canRetry = false;
+        } else {
             canRetry = true;
         }
         return canRetry;
@@ -49,10 +40,11 @@ public class QuizProgress {
         for (int score :scores){
             if(score >= 3){
                 passed = true;
-                break;
+                return true;
             }
         }
-        return passed;
+        passed = false;
+        return false;
     }
 
 //    public void setPassed(boolean passed) {
@@ -64,7 +56,28 @@ public class QuizProgress {
         return scores;
     }
 
-//    public void setScores(List<Integer> scores) {
-//        this.scores = scores;
-//    }
+    public void addScore(int score){
+        scores.add(score);
+        isPassed();
+    }
+    public float getAvgScores() {
+        float Avg;
+
+        Avg=0;
+     for(int i=0;i<scores.size();i++)
+        {
+          Avg+=scores.get(i);
+        }
+Avg=Avg/scores.size();
+return Avg;
+    }
+    public int getHighestScore() {
+        int Max=0;
+        for(int i=0;i<scores.size();i++)
+        {
+            if(Max<scores.get(i))
+            Max=scores.get(i);
+        }
+        return Max;
+    }
 }
