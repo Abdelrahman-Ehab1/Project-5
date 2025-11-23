@@ -1,6 +1,7 @@
 package ui;
 
 import controller.CoursesController;
+import controller.QuizController;
 import controller.StudentController;
 import database.CoursesDatabase;
 import database.Database;
@@ -15,6 +16,8 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AccessLessonsForm extends JFrame {
 
@@ -26,6 +29,8 @@ public class AccessLessonsForm extends JFrame {
     Database usersDB = new Database();
     CoursesController coursesController = new CoursesController(coursesDB, usersDB);
     StudentController controller = new StudentController(coursesController, coursesDB, usersDB);
+    private QuizController quizController ;
+    private Map<String, QuizController> quizControllers = new HashMap<>();
 
     public AccessLessonsForm(String courseId, String currentUserId) {
 
@@ -135,6 +140,7 @@ public class AccessLessonsForm extends JFrame {
 
                 boolean newValue = (boolean) table1.getValueAt(row, col);
                 String lessonId = table1.getValueAt(row, 0).toString();
+                quizController = quizControllers.computeIfAbsent(lessonId, id -> new QuizController(id));
 
 
                 if (newValue) {
@@ -144,13 +150,23 @@ public class AccessLessonsForm extends JFrame {
                         boolean alreadyDone = student.getProgressByCourse() // byroh ygeb el map bta3t el course da w b3den y3ml check lw el lesson kan mkhlsha el student
                                 .getOrDefault(courseId, new ArrayList<>())
                                 .contains(lessonId);
-                        if (alreadyDone) return; // lw el lesson de kant mtkhlsa mybynsh el quiz ui lw msh mkhlsa ybayn el quiz prompt
+
+                        boolean canRetry = quizController.canStartQuiz();
+
+
+                        if (!alreadyDone) {
                         int choice = JOptionPane.showConfirmDialog(AccessLessonsForm.this,
-                                "Do you want to start the quiz for this lesson",
-                                "Quiz is Required",JOptionPane.YES_NO_OPTION
-                                );
-                        if(choice == JOptionPane.YES_OPTION){
-                            QuizForm quizForm = new QuizForm(courseId, lessonId, currentUserId);
+                                "Before finishing this lesson you must access it's quiz ,Do you want to start the quiz",
+                                "Quiz is Required", JOptionPane.YES_NO_OPTION
+                        );
+                        if (choice == JOptionPane.YES_OPTION) {
+
+                            if (!canRetry) { // lw 3adet el number of attempts
+                                JOptionPane.showMessageDialog(AccessLessonsForm.this, "You finished allowed number of attempts for this quiz");
+                                return;
+                            }
+
+                            QuizForm quizForm = new QuizForm(courseId, lessonId, currentUserId, quizController);
 //                            quizForm.setVisible(true);
 //                            dispose();
 //                            dispose();
@@ -166,25 +182,37 @@ public class AccessLessonsForm extends JFrame {
                             //boolean x = quizForm.passedQuiz();
                             boolean passed = quizForm.passedQuiz();
 
-                            if(passed){ // yes is chosen and quiz is passed
+                            if (passed) { // yes is chosen and quiz is passed
                                 controller.addLessonProgress(currentUserId, lessonId, courseId);
                                 //loadLessons();
-                                table1.setValueAt(true,row, col);
-                            }
-                            else{ // yes is chosen and quiz is failed
+                                table1.setValueAt(true, row, col);
+                            } else { // yes is chosen and quiz is failed
                                 JOptionPane.showMessageDialog(AccessLessonsForm.this,
                                         "You must pass the quiz to finish this lesson",
-                                        "Quiz not passed",JOptionPane.WARNING_MESSAGE);
+                                        "Quiz not passed", JOptionPane.WARNING_MESSAGE);
                                 table1.setValueAt(false, row, col);
                             }
-                        }
-                        else{ // no is chosen
+                        } else { // no is chosen
                             table1.setValueAt(false, row, col);
                         }
                     }
-                } else {
-                    controller.setCurrentStudent(currentUserId);
-                    controller.removeLessonProgress(currentUserId, lessonId, courseId);
+//                    else{
+//                            //JOptionPane.showMessageDialog(AccessLessonsForm.this,"You already passed this quiz before");
+//                        }
+                    }
+                }
+                else {
+                    int choice2 = JOptionPane.showConfirmDialog(AccessLessonsForm.this,
+                            "Do you want to remove this finished lesson ? , note: your previous recorded quiz will be removed"
+                            ,"Remove lesson",
+                            JOptionPane.YES_NO_OPTION);
+                    if(choice2==JOptionPane.YES_OPTION) {
+                        controller.setCurrentStudent(currentUserId);
+                        controller.removeLessonProgress(currentUserId, lessonId, courseId);
+                    }
+                    else{
+                        return;
+                    }
                 }
             }
         });

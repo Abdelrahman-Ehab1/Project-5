@@ -15,77 +15,80 @@ public class QuizForm extends JFrame {
     //private JButton submitButton;
     private JPanel questionContainerPanel;
 
-    private QuizController quizController ; // ----->hereeeeeeeee
+    private QuizController quizControllerQues ; // ----->hereeeeeeeee
     private List<Question> questions;
     private boolean quizPassed = false;
     private List<Integer> studentAnswers = new ArrayList<>();
 
-    public QuizForm(String courseId , String lessonId , String currentUserId){
+    public QuizForm(String courseId , String lessonId , String currentUserId, QuizController quizController) {
         setContentPane(quizForm);
         setTitle("Take Quiz");
         setSize(900, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        //quizControllerQues = new QuizController(lessonId)
 
 
-        this.quizController = new QuizController(lessonId);
-        quizController.setQuestionsOfQuiz();
-        questions = quizController.getQuiz().getAllQuestions();
+        this.quizControllerQues = new QuizController(lessonId);
+        quizControllerQues.setQuestionsOfQuiz();
+        questions = quizControllerQues.getQuiz().getAllQuestions();
 
-        List<ButtonGroup> choiceGroups = new ArrayList<>();
 
-        JPanel questionsPanel = new JPanel();
-        questionsPanel.setLayout(new BoxLayout(questionsPanel, BoxLayout.Y_AXIS));
-        for(Question q :questions){
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
+            List<ButtonGroup> choiceGroups = new ArrayList<>();
 
-            JLabel qLabel = new JLabel(q.getTextQuestion());
-            panel.add(qLabel);
+            JPanel questionsPanel = new JPanel();
+            questionsPanel.setLayout(new BoxLayout(questionsPanel, BoxLayout.Y_AXIS));
+            for (Question q : questions) {
+                JPanel panel = new JPanel();
+                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-            ButtonGroup group = new ButtonGroup();
-            for (String option : q.getOptions()){
-                JRadioButton rb = new JRadioButton(option);
-                group.add(rb);
-                panel.add(rb);
-            }
-            choiceGroups.add(group);
-            questionsPanel.add(panel);
-        }
-        questionContainerPanel.add(questionsPanel);
+                JLabel qLabel = new JLabel(q.getTextQuestion());
+                panel.add(qLabel);
 
-        submitButton.addActionListener(e -> {
-
-            studentAnswers.clear();// btshel ay old records
-            for(ButtonGroup group: choiceGroups){
-                int selectedIndex = -1;
-                int i = 0;
-                for(Enumeration<AbstractButton> buttons = group.getElements(); buttons.hasMoreElements();) {
-                    AbstractButton button = buttons.nextElement();
-                    if (button.isSelected()) {
-                        selectedIndex = i;
-                        break;
-                    }
-                    i++;
+                ButtonGroup group = new ButtonGroup();
+                for (String option : q.getOptions()) {
+                    JRadioButton rb = new JRadioButton(option);
+                    group.add(rb);
+                    panel.add(rb);
                 }
-                studentAnswers.add(selectedIndex); //-1 lw not selected
+                choiceGroups.add(group);
+                questionsPanel.add(panel);
             }
-            quizController.setStudentAnswer(studentAnswers);
-            Quiz quiz = new Quiz(lessonId);
-            quizController.evaluateStudentQuiz(quiz.getAnswers());
-            quizPassed = quizController.isPassed();
-            if(quizPassed){
-                JOptionPane.showMessageDialog(this.quizForm, "Quiz is passed");
-            }
-            else{
-                JOptionPane.showMessageDialog(this, "Quiz is failed");
-            }
+            questionContainerPanel.add(questionsPanel);
+
+            submitButton.addActionListener(e -> {
+
+                studentAnswers.clear();// btshel ay old records
+                for (ButtonGroup group : choiceGroups) {
+                    int selectedIndex = -1;
+                    int i = 0;
+                    for (Enumeration<AbstractButton> buttons = group.getElements(); buttons.hasMoreElements(); ) {
+                        AbstractButton button = buttons.nextElement();
+                        if (button.isSelected()) {
+                            selectedIndex = i;
+                            break;
+                        }
+                        i++;
+                    }
+                    studentAnswers.add(selectedIndex); //-1 lw not selected
+                }
+                quizController.setStudentAnswer(studentAnswers);
+                Quiz quiz = new Quiz(lessonId);
+                quizController.evaluateStudentQuiz(quiz.getAnswers());
+                quizPassed = quizController.isPassed();
+                if (quizPassed) {
+                    JOptionPane.showMessageDialog(this.quizForm, "Quiz is passed");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Quiz is failed");
+                }
 //            AccessLessonsForm accessLessonsForm = new AccessLessonsForm(courseId,currentUserId);
 //            accessLessonsForm.setVisible(true);
 //            dispose();  // bt2fl el quizform w tfth acesslessonform
-        });
-    }
+            });
+        }
+
+
     public boolean passedQuiz (){
         return quizPassed;
     }

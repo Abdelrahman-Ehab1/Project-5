@@ -30,11 +30,15 @@ public class QuizProgress {
 //        return canRetry;
 //    }
 
-//    public void setCanRetry(boolean canRetry) {
+    public void setAttempts(int attempts) {
+        this.attempts = attempts;
+    }
+
+    //    public void setCanRetry(boolean canRetry) {
 //        this.canRetry = canRetry;
 //    }
     public boolean canRetryQuiz(){
-        if(passed || attempts > 3) { // if the student passed the quiz,he can't retake it // retry policy is to take quiz 3 times as a max
+        if(/*passed ||*/ attempts >3) { // if the student passed the quiz,he can't retake it // retry policy is to take quiz 3 times as a max
             return false;
         }
         else {
