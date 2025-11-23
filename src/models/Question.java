@@ -11,17 +11,17 @@ public class Question {
     private int number;
     // add mark attribute but it will make things get worse
 
-    public Question(String textQuestion, int correctAnswer ) {
+   /* public Question(String textQuestion, int correctAnswer , List<String> options ) {
 
         setTextQuestion(textQuestion);
         setCorrectAnswer(correctAnswer);
-        this.options = new ArrayList<>();
+        this.options = options;
     }
-
+*/
     public Question(String textQuestion, List<String> options, int correctAnswer){
         setTextQuestion(textQuestion);
-        setCorrectAnswer(correctAnswer);
         setOptions(options);
+        setCorrectAnswer(correctAnswer);
     }
 
     public int getCorrectAnswer() {
@@ -29,7 +29,7 @@ public class Question {
     }
 
     public void setCorrectAnswer(int correctAnswer) {
-        if(correctAnswer < 1 || correctAnswer > options.size())
+        if(correctAnswer < 0 || correctAnswer >= options.size())
             throw new IllegalArgumentException("choices out of range");
 
         this.correctAnswer = correctAnswer;

@@ -125,6 +125,7 @@ public class AccessLessonsForm extends JFrame {
             @Override
             public void tableChanged(TableModelEvent e) {
 
+
                 if (e.getType() != TableModelEvent.UPDATE) return;
 
                 int row = e.getFirstRow();
@@ -135,22 +136,39 @@ public class AccessLessonsForm extends JFrame {
                 boolean newValue = (boolean) table1.getValueAt(row, col);
                 String lessonId = table1.getValueAt(row, 0).toString();
 
+
                 if (newValue) {
                     //controller.addLessonProgress(currentUserId, lessonId, courseId);
                     {
+                        Student student = controller.getStudentById(currentUserId);
+                        boolean alreadyDone = student.getProgressByCourse() // byroh ygeb el map bta3t el course da w b3den y3ml check lw el lesson kan mkhlsha el student
+                                .getOrDefault(courseId, new ArrayList<>())
+                                .contains(lessonId);
+                        if (alreadyDone) return; // lw el lesson de kant mtkhlsa mybynsh el quiz ui lw msh mkhlsa ybayn el quiz prompt
                         int choice = JOptionPane.showConfirmDialog(AccessLessonsForm.this,
                                 "Do you want to start the quiz for this lesson",
                                 "Quiz is Required",JOptionPane.YES_NO_OPTION
                                 );
                         if(choice == JOptionPane.YES_OPTION){
-                            QuizForm quizForm = new QuizForm(courseId, lessonId,currentUserId);
-                            quizForm.setVisible(true);
-                            dispose();
+                            QuizForm quizForm = new QuizForm(courseId, lessonId, currentUserId);
+//                            quizForm.setVisible(true);
+//                            dispose();
+//                            dispose();
+                            setVisible(false);
+                            JDialog dialog = new JDialog(AccessLessonsForm.this, "Quiz", true);
+                            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                            dialog.setContentPane(quizForm.getContentPane());
+                            dialog.pack();
+                            dialog.setLocationRelativeTo(AccessLessonsForm.this);
+                            dialog.setVisible(true); // blocks accesslessonform until quiz is taken
+                            setVisible(true);
 
-                            boolean passed = quizForm.passedQuiz() ;
+                            //boolean x = quizForm.passedQuiz();
+                            boolean passed = quizForm.passedQuiz();
 
                             if(passed){ // yes is chosen and quiz is passed
                                 controller.addLessonProgress(currentUserId, lessonId, courseId);
+                                //loadLessons();
                                 table1.setValueAt(true,row, col);
                             }
                             else{ // yes is chosen and quiz is failed
@@ -165,6 +183,7 @@ public class AccessLessonsForm extends JFrame {
                         }
                     }
                 } else {
+                    controller.setCurrentStudent(currentUserId);
                     controller.removeLessonProgress(currentUserId, lessonId, courseId);
                 }
             }

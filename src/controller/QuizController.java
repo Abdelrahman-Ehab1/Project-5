@@ -8,6 +8,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class QuizController {
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
     private Quiz quiz;
     private QuizProgress quizProgress;
     private String lessonId;

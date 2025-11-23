@@ -8,11 +8,13 @@
   },
   {
     "enrolledCourseIds": [
-      "C1"
+      "C1",
+      "C2"
     ],
     "progressByCourse": {
-      "C1": [
-        "L02"
+      "C1": [],
+      "C2": [
+        "L01"
       ]
     },
     "userId": "48805",

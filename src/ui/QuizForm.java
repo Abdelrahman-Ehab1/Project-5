@@ -13,19 +13,30 @@ public class QuizForm extends JFrame {
     private JPanel quizForm;
     private JButton submitButton;
     //private JButton submitButton;
+    private JPanel questionContainerPanel;
 
     private QuizController quizController ; // ----->hereeeeeeeee
     private List<Question> questions;
     private boolean quizPassed = false;
-    private List<Integer> studentAnswers;
+    private List<Integer> studentAnswers = new ArrayList<>();
 
     public QuizForm(String courseId , String lessonId , String currentUserId){
+        setContentPane(quizForm);
+        setTitle("Take Quiz");
+        setSize(900, 600);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+
+
         this.quizController = new QuizController(lessonId);
         quizController.setQuestionsOfQuiz();
         questions = quizController.getQuiz().getAllQuestions();
 
         List<ButtonGroup> choiceGroups = new ArrayList<>();
 
+        JPanel questionsPanel = new JPanel();
+        questionsPanel.setLayout(new BoxLayout(questionsPanel, BoxLayout.Y_AXIS));
         for(Question q :questions){
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
@@ -40,8 +51,10 @@ public class QuizForm extends JFrame {
                 panel.add(rb);
             }
             choiceGroups.add(group);
-            add(panel);
+            questionsPanel.add(panel);
         }
+        questionContainerPanel.add(questionsPanel);
+
         submitButton.addActionListener(e -> {
 
             studentAnswers.clear();// btshel ay old records
@@ -68,10 +81,9 @@ public class QuizForm extends JFrame {
             else{
                 JOptionPane.showMessageDialog(this, "Quiz is failed");
             }
-
-            AccessLessonsForm accessLessonsForm = new AccessLessonsForm(courseId,currentUserId);
-            accessLessonsForm.setVisible(true);
-            dispose();  // bt2fl el quizform w tfth acesslessonform
+//            AccessLessonsForm accessLessonsForm = new AccessLessonsForm(courseId,currentUserId);
+//            accessLessonsForm.setVisible(true);
+//            dispose();  // bt2fl el quizform w tfth acesslessonform
         });
     }
     public boolean passedQuiz (){
