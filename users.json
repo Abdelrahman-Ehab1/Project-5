@@ -14,94 +14,13 @@
     "role": "INSTRUCTOR"
   },
   {
-    "enrolledCourseIds": [],
+    "enrolledCourseIds": [
+      "C1"
+    ],
     "progressByCourse": {},
-    "quizProgress": {},
     "userId": "89434",
     "username": "bodyS",
     "email": "bodyS@gmail.com",
-    "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-    "role": "STUDENT"
-  },
-  {
-    "enrolledCourseIds": [
-      "C1"
-    ],
-    "progressByCourse": {
-      "C1": [
-        "L01",
-        "L02",
-        "L03"
-      ]
-    },
-    "quizProgress": {
-      "L01": {
-        "attempts": 2,
-        "scores": [
-          2,
-          3
-        ],
-        "passed": true,
-        "canRetry": true,
-        "Avg": 0.0
-      },
-      "L02": {
-        "attempts": 1,
-        "scores": [
-          3
-        ],
-        "passed": true,
-        "canRetry": true,
-        "Avg": 0.0
-      },
-      "L03": {
-        "attempts": 2,
-        "scores": [
-          2,
-          3
-        ],
-        "passed": true,
-        "canRetry": true,
-        "Avg": 0.0
-      }
-    },
-    "userId": "96210",
-    "username": "1234",
-    "email": "1234@gmail.com",
-    "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-    "role": "STUDENT"
-  },
-  {
-    "enrolledCourseIds": [
-      "C1"
-    ],
-    "progressByCourse": {},
-    "quizProgress": {
-      "L02": {
-        "attempts": 1,
-        "scores": [
-          2
-        ],
-        "passed": false,
-        "canRetry": true,
-        "Avg": 0.0
-      }
-    },
-    "userId": "75639",
-    "username": "12345",
-    "email": "12345@gmail.com",
-    "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-    "role": "STUDENT"
-  },
-  {
-    "enrolledCourseIds": [
-      "C1"
-    ],
-    "progressByCourse": {},
-    "quizProgress": {},
-    "userId": "58979",
-    "username": "1234566",
-    "email": "123456@gmail.com",
     "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
     "role": "STUDENT"
   }
