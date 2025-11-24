@@ -1,11 +1,10 @@
 package ui;
 
 import javax.swing.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Instructor_Dashboard extends JFrame {
-
     private JButton CourseMang_But;
     private JButton LessonMang_but;
     private JButton ViewEnroll_but;
@@ -13,42 +12,40 @@ public class Instructor_Dashboard extends JFrame {
     private JPanel Instructor_Main;
 
     public Instructor_Dashboard() {
-
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setContentPane(Instructor_Main);
-        setTitle("Instructor Dashboard");
-        setSize(900, 600);
-        setLocationRelativeTo(null);   // CENTER the window
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-
-        CourseMang_But.addActionListener(e -> {
-            dispose();
-            new CourseMangment().setVisible(true);
-        });
-
-        LessonMang_but.addActionListener(e -> {
-            dispose();
-            new Lesson_Dashboard().setVisible(true);
-        });
-
-        ViewEnroll_but.addActionListener(e -> {
-            dispose();
-            new ViewStudents().setVisible(true);
-        });
-
-        Exit_but.addActionListener(e -> {
-            dispose();
-            new LoginForm().setVisible(true);
-        });
-
-
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                new LoginForm().setVisible(true);
-                dispose();
+        setLayout(null);
+        setLocationRelativeTo(null);
+setSize(900,900);
+        CourseMang_But.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                CourseMangment m=new CourseMangment();
+                m.setVisible(true);
             }
         });
-
-        setVisible(true);
+        LessonMang_but.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                new Lesson_Dashboard();
+            }
+        });
+        ViewEnroll_but.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                new ViewStudents();
+            }
+        });
+        Exit_but.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                new Mainwindow();
+            }
+        });
     }
 }

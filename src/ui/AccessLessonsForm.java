@@ -184,6 +184,8 @@ public class AccessLessonsForm extends JFrame {
 
                             if (passed) { // yes is chosen and quiz is passed
                                 controller.addLessonProgress(currentUserId, lessonId, courseId);
+
+                                controller.addQuizProgress(currentUserId,lessonId,quizController.getQuizProgress());
                                 //loadLessons();
                                 table1.setValueAt(true, row, col);
                             } else { // yes is chosen and quiz is failed
@@ -191,6 +193,7 @@ public class AccessLessonsForm extends JFrame {
                                         "You must pass the quiz to finish this lesson",
                                         "Quiz not passed", JOptionPane.WARNING_MESSAGE);
                                 table1.setValueAt(false, row, col);
+                                controller.addQuizProgress(currentUserId,lessonId,quizController.getQuizProgress());
                             }
                         } else { // no is chosen
 

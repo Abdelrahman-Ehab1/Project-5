@@ -4,6 +4,7 @@ import database.CoursesDatabase;
 import database.Database;
 import models.Course;
 import models.Lesson;
+import models.QuizProgress;
 import models.Student;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class StudentController {
         this.coursesDB = coursesDB;
         this.usersDB = usersDB;
     }
+
 
     public void setCurrentStudent(String studentId) {
         this.student = courseController.getStudentById(studentId);
@@ -101,6 +103,15 @@ public class StudentController {
         //s.getProgressLessonIds().remove(lessonId);
         s.getProgressByCourse().get(courseId).remove(lessonId);
         usersDB.saveUsers();
+    }
+
+    public void addQuizProgress(String studentId, String lessonId, QuizProgress progress){
+        Student student = getStudentById(studentId);
+        if(student!=null){
+            student.saveQuizProgress(lessonId, progress);
+            usersDB.saveUsers();
+        }
+
     }
 
 

@@ -19,15 +19,11 @@ public class CoursesController {
         this.coursesDB = coursesDB;
         this.usersDB = usersDB;
     }
-    public List<Course> getApprovedCourses() {
-        List<Course> approved = new ArrayList<>();
-        for (Course c : coursesDB.getAllCourses()) {
-            if ("APPROVED".equals(c.getApprovalStatus())) {
-                approved.add(c);
-            }
-        }
-        return approved;
+    public CoursesController(){
+        this.coursesDB = new CoursesDatabase();
+        this.usersDB = new Database();
     }
+
 
     public void createCourse(String title, String desc, String instructorId) {
         int num = 1;
@@ -39,7 +35,6 @@ public class CoursesController {
         } while (coursesDB.getCourseById(id) != null);
 
         Course course = new Course(id, title, desc, instructorId);
-        course.setApprovalStatus("PENDING");
         coursesDB.addCourse(course);
         coursesDB.saveCourses();
     }
@@ -174,7 +169,17 @@ public class CoursesController {
         return c != null ? c.getLessons() : new ArrayList<>();
     }
 
-//    public void createLesson(String title, String content, String courseId) {
+    public Course getCourseByLessonId(String lessonId){
+        List<Course> allCourses =  coursesDB.getAllCourses();
+        for(Course course : allCourses){
+            Lesson lesson = course.getLessonById(lessonId);
+            if(lesson != null)
+                return course;
+        }
+        throw new IllegalArgumentException("Course not found!");
+    }
+
+    //    public void createLesson(String title, String content, String courseId) {
 //        Course course = coursesDB.getCourseById(courseId);
 //        if (course == null) return;
 //
@@ -199,14 +204,23 @@ public class CoursesController {
 //        course.getLessons().add(newLesson);
 //        coursesDB.saveCourses();
 //    }
-   public void createLesson(String title, String content, String courseId) {
-       Course course = coursesDB.getCourseById(courseId);
-       if (course == null) return;
-       String lessonId = coursesDB.generateGlobalLessonId();
-       Lesson newLesson = new Lesson(lessonId, title, content);
-       course.getLessons().add(newLesson);
-       coursesDB.saveCourses();
-}
+    public void createLesson(String title, String content, String courseId) {
+        Course course = coursesDB.getCourseById(courseId);
+        if (course == null) return;
+        String lessonId = coursesDB.generateGlobalLessonId();
+        Lesson newLesson = new Lesson(lessonId, title, content);
+        course.getLessons().add(newLesson);
+        coursesDB.saveCourses();
+    }
+    public List<Course> getApprovedCourses() {
+        List<Course> approved = new ArrayList<>();
+        for (Course c : coursesDB.getAllCourses()) {
+            if ("APPROVED".equals(c.getApprovalStatus())) {
+                approved.add(c);
+            }
+        }
+        return approved;
+    }
 
     public void removeCourseAsInstructor(String courseId){
         Course course = coursesDB.getCourseById(courseId);

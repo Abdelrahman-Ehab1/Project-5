@@ -10,7 +10,7 @@ public class Student extends User {
     //private List<String> progressLessonIds = new ArrayList<>();
     private Map<String, List<String>> progressByCourse = new HashMap<>();
     private Map<String, QuizProgress> quizProgress = new HashMap<>();      // nasser
-    //private List<Certificate> certificates = new ArrayList<>();
+    private List<Certificate> certificates = new ArrayList<>();
 
     //map
     public Map<String, List<String>> getProgressByCourse() {
@@ -100,13 +100,14 @@ public class Student extends User {
         quizProgress.put(lessonId, progress);
     }
 
-    /*public List<Certificate> getCertificates(){
+    public List<Certificate> getCertificates(){
         return this.certificates;
     }
+    public void setCertificates(List<Certificate> certificates) { this.certificates = certificates; }
+
 
     public void addCertificate(Certificate certificate){
         certificates.add(certificate);
     }
 
-     */
 }

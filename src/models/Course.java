@@ -18,10 +18,24 @@ public class Course {
         setTitle(title);
         setDescription(description);
         setInstructorId(instructorId);
-
         this.approvalStatus = "PENDING";
         this.lessons = new ArrayList<>();
         this.studentIds = new ArrayList<>();
+    }
+    // update by boda
+
+    public String getApprovalStatus() {
+        return approvalStatus;
+    }
+
+    public void setApprovalStatus(String approvalStatus) {
+        if (approvalStatus == null)
+            approvalStatus = "PENDING";
+        this.approvalStatus = approvalStatus;
+    }
+
+    public boolean isApproved() {
+        return "APPROVED".equalsIgnoreCase(approvalStatus);
     }
 
     public String getCourseId() {
@@ -72,15 +86,21 @@ public class Course {
         return studentIds;
     }
 
-    // update by boda
-
-    public String getApprovalStatus() { return approvalStatus; }
-    public void setApprovalStatus(String approvalStatus) {
-        if (approvalStatus == null)
-            approvalStatus = "PENDING";
-        this.approvalStatus = approvalStatus;
+    public Lesson getLessonById(String lessonId) {
+        for (Lesson lesson : lessons) {
+            if (lesson.getLessonId().equals(lessonId))
+                return lesson;
+        }
+        return null;
     }
-    public boolean isApproved() {
-        return "APPROVED".equalsIgnoreCase(approvalStatus);
+
+    public List<String> getLessonsIds(){
+        List<String> ids = new ArrayList<>();
+        for(Lesson lesson : lessons){
+            ids.add(lesson.getLessonId());
+        }
+        if(ids.isEmpty())
+            throw new IllegalArgumentException("no lessons for this course");
+        return ids;
     }
 }

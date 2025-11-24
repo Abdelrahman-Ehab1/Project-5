@@ -2,6 +2,7 @@ package database;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import controller.LocalDateAdapter;
 import models.*;
 
 import java.io.*;
@@ -15,7 +16,10 @@ public class Database {
     private Gson gson;
 
     public Database() {
-        gson = new GsonBuilder().setPrettyPrinting().create();
+        gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(java.time.LocalDate.class, new LocalDateAdapter())
+                .create();
         loadUsers();
     }
 

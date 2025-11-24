@@ -19,5 +19,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="jfreechart-demo-1.5.6-jar-with-dependencies (1)" level="project" />
   </component>
 </module>
