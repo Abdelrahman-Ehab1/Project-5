@@ -218,52 +218,52 @@ public class QuizController {
     }
 
 
-    public void getResult(){   // when student click on Submit
-        if (!canTakeQuiz())
-            return;
-
-        quizProgress.addAttempt();
-
-        int mark = 0;
-        int size = quiz.getAllQuestions().size();
-
-        if (answers.size() != size)
-            throw new IllegalStateException("Student must answer all questions.");
-
-        for (int i = 0; i < size; i++) {
-            Question q = quiz.getAllQuestions().get(i);
-            if (q.getCorrectAnswer() == answers.get(i))
-                mark++;
-        }
-
-        quizProgress.addScore(mark);   // attempt added also,a mark added to the Scores list
-        if (isPassed()) {
-            student.addProgressLesson(getCourseId(lessonId), lessonId);
-
-            String courseId = getCourseId(lessonId);
-            Course course = coursesController.getCourseByLessonId(lessonId);
-
-            boolean allPassed = true;
-            for (Lesson l : course.getLessons()) {
-                QuizProgress qp = student.getQuizProgressForLesson(l.getLessonId());
-                if (qp == null || !qp.isPassed()) {
-                    allPassed = false;
-                    break;
-                }
-            }
-
-            if (allPassed) {
-                Certificate certificate = new Certificate(student.getUserId(), courseId);
-                student.addCertificate(certificate);
-
-                CertificateJsonGenerator generator = new CertificateJsonGenerator();
-                generator.generateJsonCertificate(certificate);
-
-                usersDB.saveUsers(); // persist into users.json
-            }
-        }
-        answers.clear();
-    }
+//    public void getResult(){   // when student click on Submit
+//        if (!canTakeQuiz())
+//            return;
+//
+//        quizProgress.addAttempt();
+//
+//        int mark = 0;
+//        int size = quiz.getAllQuestions().size();
+//
+//        if (answers.size() != size)
+//            throw new IllegalStateException("Student must answer all questions.");
+//
+//        for (int i = 0; i < size; i++) {
+//            Question q = quiz.getAllQuestions().get(i);
+//            if (q.getCorrectAnswer() == answers.get(i))
+//                mark++;
+//        }
+//
+//        quizProgress.addScore(mark);   // attempt added also,a mark added to the Scores list
+//        if (isPassed()) {
+//            student.addProgressLesson(getCourseId(lessonId), lessonId);
+//
+//            String courseId = getCourseId(lessonId);
+//            Course course = coursesController.getCourseByLessonId(lessonId);
+//
+//            boolean allPassed = true;
+//            for (Lesson l : course.getLessons()) {
+//                QuizProgress qp = student.getQuizProgressForLesson(l.getLessonId());
+//                if (qp == null || !qp.isPassed()) {
+//                    allPassed = false;
+//                    break;
+//                }
+//            }
+//
+//            if (allPassed) {
+//                Certificate certificate = new Certificate(student.getUserId(), courseId);
+//                student.addCertificate(certificate);
+//
+//                CertificateJsonGenerator generator = new CertificateJsonGenerator();
+//                generator.generateJsonCertificate(certificate);
+//
+//                usersDB.saveUsers(); // persist into users.json
+//            }
+//        }
+//        answers.clear();
+//    }
 
     public void saveProgress(Student student) {
 
