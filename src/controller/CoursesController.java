@@ -35,7 +35,6 @@ public class CoursesController {
         } while (coursesDB.getCourseById(id) != null);
 
         Course course = new Course(id, title, desc, instructorId);
-        course.setApprovalStatus("PENDING");
         coursesDB.addCourse(course);
         coursesDB.saveCourses();
     }
@@ -213,6 +212,18 @@ public class CoursesController {
         course.getLessons().add(newLesson);
         coursesDB.saveCourses();
     }
+<<<<<<< Updated upstream
+=======
+    public List<Course> getApprovedCourses() {
+        List<Course> approved = new ArrayList<>();
+        for (Course c : coursesDB.getAllCourses()) {
+            if ("APPROVED".equals(c.getApprovalStatus())) {
+                approved.add(c);
+            }
+        }
+        return approved;
+    }
+>>>>>>> Stashed changes
 
     public void removeCourseAsInstructor(String courseId){
         Course course = coursesDB.getCourseById(courseId);

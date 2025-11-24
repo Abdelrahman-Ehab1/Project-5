@@ -22,7 +22,17 @@ public class InstructorController {
         Flag=false;
         Avg=0;
         Counter=0;
+<<<<<<< Updated upstream
         Course CourrseF=CD.getCourseById(CourseID);
+=======
+
+        Course CourrseF=CD.getCourseById(CourseID);
+        if (CourrseF == null) {
+            System.out.println("Course not found: " + CourseID);
+            return 0; // or throw new IllegalArgumentException("Invalid CourseID")
+        }
+
+>>>>>>> Stashed changes
         List<String> ID_ss =CourrseF.getStudentIds();
         for(i=0;i<ID_ss.size();i++)
         {
@@ -45,6 +55,14 @@ public class InstructorController {
         Counter=0;
         CounterAllEnrolled=0;
         Course CourrseF=CD.getCourseById(CourseID);
+<<<<<<< Updated upstream
+=======
+        if (CourrseF == null) {
+            System.out.println("Course not found: " + CourseID);
+            return 0;
+        }
+
+>>>>>>> Stashed changes
         List<String> ID_ss =CourrseF.getStudentIds();
         for(i=0;i<ID_ss.size();i++)
         {
@@ -67,6 +85,14 @@ public class InstructorController {
         Flag = false;
         Counter = 0;
         Course CourrseF = CD.getCourseById(CourseID);
+<<<<<<< Updated upstream
+=======
+        if (CourrseF == null) {
+            System.out.println("Course not found: " + CourseID);
+            return 0;
+        }
+
+>>>>>>> Stashed changes
         List<Lesson> lessons = CourrseF.getLessons();
         List<String> ID_ss = CourrseF.getStudentIds();
         for (i = 0; i < ID_ss.size(); i++) {

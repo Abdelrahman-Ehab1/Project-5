@@ -18,10 +18,21 @@ public class Course {
         setTitle(title);
         setDescription(description);
         setInstructorId(instructorId);
-
         this.approvalStatus = "PENDING";
         this.lessons = new ArrayList<>();
         this.studentIds = new ArrayList<>();
+    }
+    // update by boda
+
+    public String getApprovalStatus() { return approvalStatus; }
+    public void setApprovalStatus(String approvalStatus) {
+        if (approvalStatus == null)
+            approvalStatus = "PENDING";
+        this.approvalStatus = approvalStatus;
+    }
+
+    public boolean isApproved() {
+        return "APPROVED".equalsIgnoreCase(approvalStatus);
     }
 
     public String getCourseId() {
@@ -72,11 +83,27 @@ public class Course {
         return studentIds;
     }
 
+<<<<<<< Updated upstream
     public Lesson getLessonById(String lessonId){
         for (Lesson lesson : lessons){
             if(lesson.getLessonId().equals(lessonId))
+=======
+    public Lesson getLessonById(String lessonId) {
+        for (Lesson lesson : lessons) {
+            if (lesson.getLessonId().equals(lessonId))
+>>>>>>> Stashed changes
                 return lesson;
         }
         return null;
     }
+<<<<<<< Updated upstream
+=======
+
+//    public List<String> getLessonsIds() {
+//        List<String> ids = new ArrayList<>();
+//        for (Lesson lesson : lessons) {
+//            ids.add(lesson.getLessonId());
+//        }
+//    }
+>>>>>>> Stashed changes
 }

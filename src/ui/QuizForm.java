@@ -5,6 +5,7 @@ import models.Question;
 import models.Quiz;
 
 import javax.swing.*;
+import java.lang.classfile.Label;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -30,7 +31,9 @@ public class QuizForm extends JFrame {
         //quizControllerQues = new QuizController(lessonId)
 
 
-        this.quizControllerQues = new QuizController(lessonId);
+        //this.quizControllerQues = new QuizController(lessonId);
+        this.quizControllerQues = quizController;
+        quizControllerQues.getQuiz().getAllQuestions().clear();
         quizControllerQues.setQuestionsOfQuiz();
         questions = quizControllerQues.getQuiz().getAllQuestions();
 
@@ -74,9 +77,42 @@ public class QuizForm extends JFrame {
                     studentAnswers.add(selectedIndex); //-1 lw not selected
                 }
                 quizController.setStudentAnswer(studentAnswers);
-                Quiz quiz = new Quiz(lessonId);
-                quizController.evaluateStudentQuiz(quiz.getAnswers());
+                //Quiz quiz = new Quiz(lessonId);
+                quizController.evaluateStudentQuiz(quizController.getQuiz().getAnswers());
                 quizPassed = quizController.isPassed();
+                //
+//                quizController.setStudentAnswer((studentAnswers));
+//                quizController.evaluateStudentQuiz(quizController.getQuiz().getAnswers());
+//                quizPassed = quizController.isPassed();
+                JPanel resultPanel = new JPanel();
+                resultPanel.setLayout(new BoxLayout(resultPanel,BoxLayout.Y_AXIS));
+                int lastscore = quizController.getQuizProgress().getScores()
+                        .get(quizController.getQuizProgress().getScores().size()-1);
+                JLabel scoreLabel = new JLabel("Score: "+ lastscore);
+                JLabel statusLabel = new JLabel("passed: "+quizPassed);
+                resultPanel.add(scoreLabel);
+
+                resultPanel.add(statusLabel);
+
+                List<Question> allQuestions = quizController.getQuiz().getAllQuestions();
+                for(int i = 0 ; i < allQuestions.size() ; i++){
+                    Question q = allQuestions.get(i);
+                    int studentAns = studentAnswers.get(i);
+                    int correctAns = q.getCorrectAnswer();
+
+                    JLabel qLabel = new JLabel("Q" + (i+1) + ": "+ q.getTextQuestion());
+                    JLabel studentLabel = new JLabel("Your answer: "+(studentAns>=0 ? q.getOptions().get(studentAns) : "Not answered"));
+                    JLabel correctLabel = new JLabel ("correct answer: " + q.getOptions().get(correctAns));
+                    resultPanel.add(qLabel);
+                    resultPanel.add(studentLabel);
+                    resultPanel.add(correctLabel);
+                }
+                questionContainerPanel.removeAll();
+                questionContainerPanel.add(resultPanel);
+                questionContainerPanel.revalidate();
+                questionContainerPanel.repaint();
+
+                //
                 if (quizPassed) {
                     JOptionPane.showMessageDialog(this.quizForm, "Quiz is passed");
                 } else {

@@ -1,5 +1,6 @@
 package ui;
 
+
 import controller.CoursesController;
 import controller.InstructorController;
 import database.CoursesDatabase;
@@ -10,14 +11,13 @@ import models.UserSession;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.List;
 
 public class Lesson_Dashboard extends JFrame {
-
     private JTextField CourseID_field;
     private JButton searchButton;
     private JTable LessonsTable;
@@ -42,9 +42,10 @@ public class Lesson_Dashboard extends JFrame {
     InstructorController IC=new InstructorController();
     Boolean Flag=false;
     public Lesson_Dashboard() {
-
         setContentPane(LessonsPanel);
-        setSize(900, 600);
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(900,900);
         setLocationRelativeTo(null);
         String [] mk={"Lesson ID","Title","Content","Quiz AvrMark","Completion Percentage"};
         exitButton.addActionListener(new ActionListener() {
@@ -53,19 +54,26 @@ public class Lesson_Dashboard extends JFrame {
                 setVisible(false);
                 new Instructor_Dashboard();
 
+<<<<<<< Updated upstream
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 Instructor_Dashboard instructor = new Instructor_Dashboard();
                 instructor.setVisible(true);
                 dispose();
+=======
+>>>>>>> Stashed changes
             }
         });
-        String[] tableColumns = {"Lesson ID", "Title", "Content"};
-
-        exitButton.addActionListener(e -> {
-            setVisible(false);
-            new Instructor_Dashboard();
+        NewsaveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!NewTitle.getText().isEmpty()&&!NewContent.getText().isEmpty())
+                    Con.createLesson(NewTitle.getText(),NewContent.getText(),IDD);
+                else
+                    JOptionPane.showMessageDialog(LessonsPanel,"Dont leave Blank");
+            }
         });
+<<<<<<< Updated upstream
 
         // update by boda
         NewsaveButton.addActionListener(e -> {
@@ -148,54 +156,76 @@ public class Lesson_Dashboard extends JFrame {
                 for(i=0;i<kk.size();i++)
                 {
                     formatt.addRow(new Object[]{kk.get(i).getLessonId(),kk.get(i).getTitle(),kk.get(i).getContent(),IC.LessonAvg(kk.get(i).getLessonId(),IDD),100*IC.LessonCompletion(kk.get(i).getLessonId(),IDD)+"%"});
+=======
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(Title_field.getText().isEmpty()||Title_field.getText().isEmpty())
+                {
+                    JOptionPane.showMessageDialog(LessonsPanel,"Make sure there is no Blank");
+                    return;
+>>>>>>> Stashed changes
                 }
+                Lesson c=kk.get(xm);
+                c.setTitle(Title_field.getText());
+                c.setContent(Content_field.getText());
+                Con.updateLesson(IDD,c);
             }
-
-            if (selectedCourse == null) {
-                JOptionPane.showMessageDialog(LessonsPanel,
-                        "Invalid Course ID or not accessible.");
-                return;
-            }
-
-            // check approval
-            if (!selectedCourse.isApproved()) {
-                JOptionPane.showMessageDialog(LessonsPanel,
-                        "This course is NOT APPROVED. You cannot view lessons.");
-                LessonsTable.setModel(new DefaultTableModel());
-                return;
-            }
-
-            refreshLessonsTable(tableColumns);
         });
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(LessonsTable.getValueAt(xm,1).toString().isEmpty())
+                {
+                    JOptionPane.showMessageDialog(LessonsPanel,"Make sure that  is no Blank");
+                    return;
+                }
+                Con.deleteLesson(IDD,LessonsTable.getValueAt(xm,0).toString()
+                );
+            }
+        });
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Flag=false;
+                kk=null;
+                LP=null;
+                IDD=CourseID_field.getText();
+                for(i=0;i<m.size();i++)
+                {
+                    if(IDD.equalsIgnoreCase(m.get(i).getCourseId()))
+                    {
+                        Flag=true;
+                        LP=m.get(i);
+                        break;
+                    }
+                }
+                if(!Flag){
+                    JOptionPane.showMessageDialog(LessonsPanel,"Please Enter a valid Course-ID that is accesible by Instructor ");
+                    return;
+                }
 
+                DefaultTableModel formatt=new DefaultTableModel(mk,0);
+                kk=LP.getLessons();
+                if(kk.isEmpty())
+                {
+                    JOptionPane.showMessageDialog(LessonsPanel,"There is no lessons in this course");
+                }
+                for(i=0;i<kk.size();i++)
+                {
+                    formatt.addRow(new Object[]{kk.get(i).getLessonId(),kk.get(i).getTitle(),kk.get(i).getContent(),IC.LessonAvg(kk.get(i).getLessonId(),IDD),100*IC.LessonCompletion(kk.get(i).getLessonId(),IDD)+"%"});
+                }
+                LessonsTable.setModel(formatt);
+            }
+        });
         LessonsTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                selectedRow = LessonsTable.getSelectedRow();
-
-                if (selectedRow >= 0) {
-                    Title_field.setText(LessonsTable.getValueAt(selectedRow, 1).toString());
-                    Content_field.setText(LessonsTable.getValueAt(selectedRow, 2).toString());
-                }
+                xm=-1;
+                xm =LessonsTable.getSelectedRow();
+                Title_field.setText(LessonsTable.getValueAt(xm,1).toString());
+                Content_field.setText(LessonsTable.getValueAt(xm,2).toString());
             }
         });
-        setVisible(true);
-    }
-
-    // update by boda
-    private void refreshLessonsTable(String[] columns) {
-        lessonList = selectedCourse.getLessons();
-
-        DefaultTableModel model = new DefaultTableModel(columns, 0);
-
-        for (Lesson lesson : lessonList) {
-            model.addRow(new Object[]{
-                    lesson.getLessonId(),
-                    lesson.getTitle(),
-                    lesson.getContent()
-            });
-        }
-
-        LessonsTable.setModel(model);
     }
 }

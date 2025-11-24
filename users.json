@@ -1,26 +1,13 @@
 [
   {
-    "userId": "19572",
-    "username": "boda",
-    "email": "boda@gmail.com",
-    "passwordHash": "f05cf0e1b0f53e4962118589d0dea67fcc461280dc7f1fbdc297ba2ec3d1070a",
-    "role": "INSTRUCTOR"
-  },
-  {
-    "userId": "70946",
-    "username": "ali",
-    "email": "ali@gmail.com",
-    "passwordHash": "4e0227879fc12b66dc2571615a5466cb7bd2582efe1c00d888e35aa0cc254089",
-    "role": "INSTRUCTOR"
-  },
-  {
-    "userId": "59020",
+    "userId": "98801",
     "username": "Abdo",
     "email": "Abdo@gmail.com",
     "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
     "role": "INSTRUCTOR"
   },
   {
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     "enrolledCourseIds": [],
     "progressByCourse": {},
@@ -33,6 +20,11 @@
     "username": "body",
     "email": "body@gmail.com",
 >>>>>>> c06528a1cbd71f2ac1faaea7c021ac8f000e95b2
+=======
+    "userId": "57653",
+    "username": "body",
+    "email": "body@gmail.com",
+>>>>>>> Stashed changes
     "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
     "role": "INSTRUCTOR"
   },
@@ -40,6 +32,7 @@
     "enrolledCourseIds": [],
     "progressByCourse": {},
     "quizProgress": {},
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     "userId": "73982",
     "username": "Student2",
@@ -49,25 +42,127 @@
     "username": "bodyS",
     "email": "bodyS@gmail.com",
 >>>>>>> c06528a1cbd71f2ac1faaea7c021ac8f000e95b2
+=======
+    "userId": "89434",
+    "username": "bodyS",
+    "email": "bodyS@gmail.com",
+>>>>>>> Stashed changes
     "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
     "role": "STUDENT"
   },
   {
     "enrolledCourseIds": [
-      "C9",
-      "C13",
-      "C12"
+      "C1"
     ],
     "progressByCourse": {
+<<<<<<< Updated upstream
 <<<<<<< HEAD
       "C9": [
         "L00"
       ],
       "C12": [
         "L02"
+=======
+      "C1": [
+        "L01",
+        "L02",
+        "L03"
+>>>>>>> Stashed changes
       ]
     },
+    "quizProgress": {
+      "L01": {
+        "attempts": 2,
+        "scores": [
+          2,
+          3
+        ],
+        "passed": true
+      },
+      "L02": {
+        "attempts": 1,
+        "scores": [
+          3
+        ],
+        "passed": true
+      },
+      "L03": {
+        "attempts": 2,
+        "scores": [
+          2,
+          3
+        ],
+        "passed": true
+      }
+    },
+    "userId": "96210",
+    "username": "1234",
+    "email": "1234@gmail.com",
+    "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+    "role": "STUDENT"
+  },
+  {
+    "enrolledCourseIds": [
+      "C1"
+    ],
+    "progressByCourse": {},
+    "quizProgress": {
+      "L02": {
+        "attempts": 1,
+        "scores": [
+          2
+        ],
+        "passed": false
+      }
+    },
+    "userId": "75639",
+    "username": "12345",
+    "email": "12345@gmail.com",
+    "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+    "role": "STUDENT"
+  },
+  {
+    "enrolledCourseIds": [
+      "C1"
+    ],
+    "progressByCourse": {},
     "quizProgress": {},
+    "userId": "58979",
+    "username": "1234566",
+    "email": "123456@gmail.com",
+    "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+    "role": "STUDENT"
+  },
+  {
+    "enrolledCourseIds": [
+      "C13",
+      "C12",
+      "C3"
+    ],
+    "progressByCourse": {
+      "C12": [
+        "L05"
+      ]
+    },
+    "quizProgress": {
+      "L02": {
+        "attempts": 3,
+        "scores": [
+          1,
+          2,
+          2
+        ],
+        "passed": false
+      },
+      "L05": {
+        "attempts": 2,
+        "scores": [
+          2,
+          5
+        ],
+        "passed": true
+      }
+    },
     "userId": "70182",
     "username": "hany",
     "email": "hany@gmail.com",
@@ -148,6 +243,7 @@
     "role": "STUDENT"
   },
   {
+<<<<<<< Updated upstream
     "enrolledCourseIds": [
       "C1"
     ],
@@ -165,5 +261,12 @@
     "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
 >>>>>>> c06528a1cbd71f2ac1faaea7c021ac8f000e95b2
     "role": "STUDENT"
+=======
+    "userId": "60142",
+    "username": "admin",
+    "email": "admin@gmail.com",
+    "passwordHash": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
+    "role": "ADMIN"
+>>>>>>> Stashed changes
   }
 ]
