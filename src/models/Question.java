@@ -29,7 +29,7 @@ public class Question {
     }
 
     public void setCorrectAnswer(int correctAnswer) {
-        if(correctAnswer < 0 || correctAnswer >= options.size())
+        if(correctAnswer < 0 || correctAnswer > options.size())
             throw new IllegalArgumentException("choices out of range");
 
         this.correctAnswer = correctAnswer;

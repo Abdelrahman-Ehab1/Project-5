@@ -10,7 +10,11 @@ public class Student extends User {
     //private List<String> progressLessonIds = new ArrayList<>();
     private Map<String, List<String>> progressByCourse = new HashMap<>();
     private Map<String, QuizProgress> quizProgress = new HashMap<>();      // nasser
+<<<<<<< HEAD
     //private List<Certificate> certificates = new ArrayList<>();
+=======
+
+>>>>>>> c06528a1cbd71f2ac1faaea7c021ac8f000e95b2
 
     //map
     public Map<String, List<String>> getProgressByCourse() {
@@ -87,7 +91,10 @@ public class Student extends User {
 //        return false;
 //    }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> c06528a1cbd71f2ac1faaea7c021ac8f000e95b2
     public Map<String, QuizProgress> getQuizProgress() {  // we return the whole map
         return quizProgress;
     }
@@ -100,6 +107,7 @@ public class Student extends User {
         quizProgress.put(lessonId, progress);
     }
 
+<<<<<<< HEAD
     /*public List<Certificate> getCertificates(){
         return this.certificates;
     }
@@ -109,4 +117,6 @@ public class Student extends User {
     }
 
      */
+=======
+>>>>>>> c06528a1cbd71f2ac1faaea7c021ac8f000e95b2
 }

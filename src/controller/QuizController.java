@@ -1,11 +1,14 @@
 package controller;
 
-import models.Question;
-import models.Quiz;
-import models.QuizProgress;
+import database.CoursesDatabase;
+import database.Database;
+import models.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.MatchResult;
 
 public class QuizController {
     public Quiz getQuiz() {
@@ -19,15 +22,33 @@ public class QuizController {
     private Quiz quiz;
     private QuizProgress quizProgress;
     private String lessonId;
-    private List<Integer> studentAnswer;
-    int marks;
+    private CoursesController coursesController = new CoursesController();
+    private List<Integer> answers;
+    private Student student;
+    private Database usersDB;
 
+    public QuizController(String studentId, String lessonId ,CoursesController coursesController,Database usersDB){
 
-    public QuizController(String lessonId){
         setLessonId(lessonId);
-        this.quiz = new Quiz(lessonId);
-        this.quizProgress = new QuizProgress();
+        if(studentId == null || studentId.isEmpty())
+            throw new IllegalArgumentException("student id can't be empty");
 
+        this.usersDB = usersDB;
+        this.coursesController = coursesController;
+        Course course = coursesController.getCourseByLessonId(lessonId);
+        Lesson lesson = course.getLessonById(lessonId);
+        this.student = coursesController.getStudentById(studentId);
+//        if (!student.getEnrolledCourseIds().contains(course.getCourseId())) {
+//            throw new IllegalStateException("Student is not enrolled in this course.");
+//        }
+
+
+        this.quiz =lesson.getQuiz();
+        this.quizProgress = student.getQuizProgressForLesson(lessonId);
+        if (this.quizProgress == null)
+            this.quizProgress = new QuizProgress();
+
+        this.answers = new ArrayList<>();
     }
 
     public void setLessonId(String lessonId) {
@@ -40,15 +61,23 @@ public class QuizController {
         return lessonId;
     }
 
+    public String getStudentId() {
+        return student.getUserId();
+    }
+
+
     /*public void addOption(String option , int number){
         if(option == null || option.isEmpty())
             throw new IllegalArgumentException("option can not be empty");
         quiz.getQuestionByNumber(number).getOptions().add(option);
     }*/
 
-    public boolean answerQuestion(int choice, int index){
+    public void setAnswersOfStudent(int choice){
+        answers.add(choice);
+    }
 
-        return choice == index;
+    public boolean isPassed(){
+        return quizProgress.isPassed();
     }
 
     public void addQuestion(String text , List<String> options ,int answerIndex ){
@@ -63,43 +92,53 @@ public class QuizController {
         addQuestion("what is the capital of Japan?", Arrays.asList("Cairo","Istanbul","Tokyo","New York"), 2);
     };
 
-    public List<Integer> getStudentAnswer() {
-        return studentAnswer;
+    public boolean canTakeQuiz(){
+        return quizProgress.canRetryQuiz();   // called before clicking on retake quiz
     }
 
-    public void setStudentAnswer(List<Integer> studentAnswer) {
-        this.studentAnswer = studentAnswer;
+    public void startQuiz() {
+        if (!canTakeQuiz())
+            throw new IllegalStateException("Max attempts reached or quiz already passed.");
+
+        answers.clear();
     }
 
-    public void evaluateStudentQuiz(List<Integer> answers){
-       // quizProgress.addAttempt();
-        int size = getStudentAnswer().size();
-        for(int i =0;i<size;i++){
-            if(studentAnswer.get(i) == answers.get(i)){
-                marks ++;
-            }
+    public String getCourseId(String lessonId){
+        return coursesController.getCourseByLessonId(lessonId).getCourseId();
+    }
 
-        }
-        quizProgress.getScores().add(marks);
-    }
-    public boolean isPassed(){
-        if(quizProgress.isPassed()){
-            return true;
-        }
-        else {
-            return false ;
-        }
-    }
-    public boolean canStartQuiz(){// this function will be called from ui
+
+    public void getResult(){   // when student click on Submit
+        if (!canTakeQuiz())
+            return;
+
         quizProgress.addAttempt();
-        if(quizProgress.canRetryQuiz()){
-            return true;
+
+        int mark = 0;
+        int size = quiz.getAllQuestions().size();
+
+        if (answers.size() != size)
+            throw new IllegalStateException("Student must answer all questions.");
+
+        for (int i = 0; i < size; i++) {
+            Question q = quiz.getAllQuestions().get(i);
+            if (q.getCorrectAnswer() == answers.get(i))
+                mark++;
         }
-        else{
-            return false;
-        }
+
+        quizProgress.addScore(mark);   // attempt added also,a mark added to the Scores list
+        if (quizProgress.isPassed())
+            student.addProgressLesson(getCourseId(lessonId), lessonId);
+
+        answers.clear();
     }
 
+    public void saveProgress(Student student) {
+
+//        student.getQuizProgress().put(lessonId, quizProgress);
+        student.saveQuizProgress(lessonId,quizProgress);     //student must be updated!!!
+        usersDB.saveUsers();
+        // then call studentController.updateStudent(student) in UI
+    }
 
 }
- // proceed to 3rd point
